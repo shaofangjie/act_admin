@@ -28,7 +28,7 @@
   <url>https://thinking.studio</url>
 
   <properties>
-    <app.entry>com.act.admin.act-admin.AppEntry</app.entry>
+    <app.entry>com.act.admin.AppEntry</app.entry>
   </properties>
 
   <parent>
@@ -38,15 +38,12 @@
   </parent>
 
   <dependencies>
-    <!-- 
-    Insert Maven Deps here...
-     -->
-
-<!-- ACT MODULES Do not delete or edit this tag -->
-
-
-
-<!-- END ACT MODULES Do not delete or edit this tag -->
+    <!-- https://mvnrepository.com/artifact/org.actframework/act-beetl -->
+    <dependency>
+      <groupId>org.actframework</groupId>
+      <artifactId>act-beetl</artifactId>
+      <version>1.4.1</version>
+    </dependency>
 
   </dependencies>
 
