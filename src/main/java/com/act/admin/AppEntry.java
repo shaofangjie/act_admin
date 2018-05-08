@@ -17,7 +17,7 @@ public class AppEntry extends Controller.Util {
     }
 
     public static void main(String[] args) throws Exception {
-        Act.start();
+        Act.start("ACT_ADMIN");
     }
 
 }

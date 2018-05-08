@@ -19,14 +19,25 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.act.admin.act-admin</groupId>
-  <artifactId>act-admin</artifactId>
+  <groupId>com.act.act_admin</groupId>
+  <artifactId>act_admin</artifactId>
   <version>1.0.0</version>
 
-  <name>act-admin</name>
-  <description>Description of your application goes here</description>
-  <url>https://thinking.studio</url>
-
+  <name>act_admin</name>
+  <profiles>
+    <profile>
+      <id>jdk-1.8</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+      </properties>
+    </profile>
+  </profiles>
   <properties>
     <app.entry>com.act.admin.AppEntry</app.entry>
   </properties>
@@ -38,17 +49,72 @@
   </parent>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.actframework/act-starter-ebean-all-java7 -->
+    <dependency>
+      <groupId>org.actframework</groupId>
+      <artifactId>act-starter-ebean-all-java7</artifactId>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.actframework/act-beetl -->
     <dependency>
       <groupId>org.actframework</groupId>
       <artifactId>act-beetl</artifactId>
       <version>1.4.1</version>
     </dependency>
-
+    <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+    <dependency>
+      <groupId>com.github.penggle</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.11.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.46</version>
+    </dependency>
   </dependencies>
-
   <build>
     <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>create-archive</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration combine.self="override">
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/assembly/pkg.xml</descriptor>
+              </descriptors>
+              <outputDirectory>${project.build.directory}/dist/</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
-
 </project>
