@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.actframework</groupId>
             <artifactId>act-beetl</artifactId>
-            <version>1.4.1</version>
+            <version>1.4.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.actframework/act-storage -->
         <dependency>
@@ -98,6 +98,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.46</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.5</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>

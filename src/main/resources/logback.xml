@@ -30,7 +30,7 @@
     </triggeringPolicy>
   </appender>
 
-  <appender name="METRIC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>act.metric.log</file>
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
@@ -47,30 +47,13 @@
     </triggeringPolicy>
   </appender>
 
-  <logger name="act" level="INFO" additivity="false">
+  <logger name="com.act.admin" level="DEBUG" additivity="false">
     <appender-ref ref="FILE" />
     <appender-ref ref="STDOUT" />
   </logger>
 
-  <logger name="act.db" level="DEBUG" additivity="false">
-    <appender-ref ref="FILE" />
-  </logger>
-
-  <logger name="act.ws" level="DEBUG" additivity="false">
-    <appender-ref ref="FILE"/>
-    <appender-ref ref="STDOUT"/>
-  </logger>
-
-  <logger name="act.mail" level="DEBUG" additivity="false">
-    <appender-ref ref="FILE"/>
-  </logger>
-
-  <logger name="metric.act" level="TRACE">
-    <appender-ref ref="METRIC_FILE" />
-  </logger>
-
-  <logger name="com.act.admin.act-admin" level="DEBUG" additivity="false">
-    <appender-ref ref="FILE" />
+  <logger name="io.ebean.SQL" level="DEBUG" additivity="false">
+    <appender-ref ref="SQL" />
     <appender-ref ref="STDOUT" />
   </logger>
 
