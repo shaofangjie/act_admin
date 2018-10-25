@@ -3,19 +3,24 @@ package com.act.admin.models.authority;
 import com.act.admin.models.BaseModel;
 import io.ebean.Finder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
-@Table(name = "admin_role_resources")
-public class AdminRoleResourcesModel extends BaseModel {
+@Table(name = "admin_resources")
+public class AdminResourcesModel extends BaseModel {
 
-    public static final Finder<Long, AdminRoleResourcesModel> find = new Finder<Long, AdminRoleResourcesModel>(AdminRoleResourcesModel.class);
+    public static final Finder<Long, AdminResourcesModel> find = new Finder<Long, AdminResourcesModel>(AdminResourcesModel.class);
 
-    @Column(name = "source_pid", columnDefinition = "integer default 0")
-    public int sourcePid; //父Id
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = AdminResourcesModel.class, fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "source_pid")
+    public AdminResourcesModel sourcePid;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "admin_role_resources", joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    public List<AdminRoleModel> adminRoles;
 
     @Column(name = "source_type", columnDefinition = "integer default 0")
     public int sourceType; //资源类型 0:功能 1:数据
