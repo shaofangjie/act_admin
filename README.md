@@ -15,5 +15,9 @@
     db.ddl.drop=false
     db.ddl.create=false
 6、浏览器访问 http://localhost:8000/
+    用户名：admin
+    密码：admin
+    
+    注意：验证码dev模式下后台不校验，随便填写四位字符即可。
 
 ```
