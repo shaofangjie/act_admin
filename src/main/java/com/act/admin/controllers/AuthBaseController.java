@@ -13,6 +13,7 @@ import org.osgl.logging.Logger;
 import org.osgl.mvc.annotation.Before;
 
 import javax.inject.Inject;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +63,20 @@ public class AuthBaseController extends BaseController {
     private boolean checkPermission(ActionContext context) {
         String actionPath = context.actionPath().trim();
         logger.debug(actionPath);
-        boolean ignorePermissionCheck;
+        boolean ignorePermissionCheck = false;
         try {
             String classsName = actionPath.substring(0, actionPath.lastIndexOf("."));
             String methodName = actionPath.substring(actionPath.lastIndexOf(".") + 1, actionPath.length());
-            ignorePermissionCheck = Class.forName(classsName).getMethod(methodName).isAnnotationPresent(IgnorePermissionCheck.class);
+            Method[] methods = Class.forName(classsName).getMethods();
+            //判断指定方法是否有IgnorePermissionCheck注解
+            for (Method method :methods) {
+                if (methodName.equals(method.getName()) && null != method.getAnnotation(IgnorePermissionCheck.class)) {
+                    ignorePermissionCheck = true;
+                    break;
+                }
+            }
+            //下面的判断方式简单，但是有坑。有参数的方法判断有问题
+            //ignorePermissionCheck = Class.forName(classsName).getMethod(methodName).isAnnotationPresent(IgnorePermissionCheck.class);
             if (ignorePermissionCheck) {
                 return true;
             }

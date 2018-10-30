@@ -21,8 +21,6 @@ public class MainController extends AuthBaseController {
     private static Logger logger = L.get(MainController.class);
 
     @Inject
-    private H.Session session;
-    @Inject
     private MainService mainService;
 
     @IgnorePermissionCheck()
@@ -38,7 +36,7 @@ public class MainController extends AuthBaseController {
     }
 
     @IgnorePermissionCheck()
-    public Result menu() {
+    public Result menu(H.Session session) {
         Long adminId = Long.parseLong(session.get("adminid"));
         return renderJson(mainService.getMenuJsonByAdminId(adminId));
     }
