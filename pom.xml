@@ -42,6 +42,12 @@
         <app.entry>com.act.admin.AppEntry</app.entry>
     </properties>
 
+    <!--<parent>-->
+        <!--<groupId>org.sonatype.oss</groupId>-->
+        <!--<artifactId>oss-parent</artifactId>-->
+        <!--<version>7</version>-->
+    <!--</parent>-->
+
     <!-- https://mvnrepository.com/artifact/org.actframework/act-starter-parent -->
     <parent>
         <groupId>org.actframework</groupId>
