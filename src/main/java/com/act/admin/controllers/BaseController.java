@@ -4,24 +4,21 @@ import act.app.ActionContext;
 import act.conf.AppConfig;
 import act.controller.Controller;
 import act.storage.StorageServiceManager;
-import com.act.admin.commonutil.KaptchaUtil;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ShearCaptcha;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.osgl.Osgl;
 import org.osgl.http.H;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
-import org.osgl.mvc.annotation.Before;
 import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.Result;
 import org.osgl.storage.ISObject;
 import org.osgl.storage.IStorageService;
-import org.osgl.util.E;
 import org.osgl.util.IO;
 
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -37,37 +34,14 @@ public class BaseController extends Controller.Util {
     private static Logger logger = L.get(BaseController.class);
 
     @Inject
-    private H.Session session;
-    @Inject
-    private ActionContext context;
-    @Inject
     private AppConfig conf;
-    @Inject
-    private KaptchaUtil kaptchaUtil;
 
-
-    @Before
-    public void before() {
-
-
+    public Result loginOut(H.Session session) {
+        session.clear();
+        throw Controller.Util.redirect("LoginController.loginIndex");
     }
 
-//    public AdminModel getAdminInfo() {
-//
-//        if (StringUtils.isBlank(session.get("admin_id"))) {
-//            throw Controller.Util.redirect("LoginController.login");
-//        }
-//        AdminModel admin = AdminModel.find.byId(Long.parseLong(session.get("admin_id")));
-//
-//        if (null == admin) {
-//            throw Controller.Util.redirect("LoginController.login");
-//        }
-//
-//        return admin;
-//
-//    }
-
-    public static void noCache(H.Response response) {
+    private static void noCache(H.Response response) {
         long time = System.currentTimeMillis();
         response.header("Pragma", "No-cache");
         response.header("Cache-Control", "no-cache");
@@ -82,26 +56,17 @@ public class BaseController extends Controller.Util {
             try {
                 noCache(response);
                 response.header("Content-Type", "image/jpeg");
-                String captcha = "";
-                captcha = kaptchaUtil.getKaptcha().createText();
-                BufferedImage challenge = kaptchaUtil.getKaptcha().createImage(captcha);
-                ImageIO.write(challenge, "jpg", out.asOutputStream());
+                ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(100, 38, 4, 3);
+                session.cache("captcha", captcha.getCode(), 300);
+                logger.debug(captcha.getCode());
+                captcha.write(out.asOutputStream());
                 IO.close(out.asOutputStream());
-                session.cache("captcha", captcha, 300);
-            } catch (IOException e) {
-                throw E.ioException(e);
+            } catch (Exception e) {
+                return null;
             }
             return null;
         }));
-    }
 
-
-    public boolean captchaVerify(String captcha) {
-        logger.debug(conf.get("debug").toString());
-        if ("true".equals(conf.get("debug"))) {
-            return true;
-        }
-        return captcha.equalsIgnoreCase(session.cached("captcha").toString());
     }
 
     @ResponseStatus(200)
@@ -152,7 +117,6 @@ public class BaseController extends Controller.Util {
 
     public JSONObject buildSuccessResult(String msg) {
         JSONObject result = new JSONObject();
-        result.put("result", "success");
         result.put("errcode", 0);
         result.put("msg", msg);
         return result;
@@ -160,7 +124,6 @@ public class BaseController extends Controller.Util {
 
     public JSONObject buildFailedResult(String msg, JSONObject detailErr) {
         JSONObject result = new JSONObject();
-        result.put("result", "failed");
         result.put("errcode", 1);
         if (null == detailErr) {
             result.put("detail", 0);

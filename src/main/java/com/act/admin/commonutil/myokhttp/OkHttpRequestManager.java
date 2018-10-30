@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class OkHttpRequestManager {
     private Logger logger = L.get(OkHttpRequestManager.class);
     // okHttp 使用文档 https://github.com/square/okhttp/wiki/Calls
-    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");//mdiatype 这个需要和服务端保持一致
+    private static final MediaType MEDIA_TYPE_FORM = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");//mdiatype 这个需要和服务端保持一致
     private static volatile OkHttpRequestManager mInstance;//单例引用
     private OkHttpClient mOkHttpClient;//okHttpClient 实例
 
@@ -145,7 +145,7 @@ public class OkHttpRequestManager {
         String result = null;
         if (null != content) {
             if (null == mediaType) {
-                mediaType = MEDIA_TYPE_JSON;
+                mediaType = MEDIA_TYPE_FORM;
             }
             result = postBySyn(addHeaders(headers).url(requestUrl), RequestBody.create(mediaType, content));
         } else {
@@ -166,7 +166,7 @@ public class OkHttpRequestManager {
         try {
             if (null != paramsMap && paramsMap.size() > 0) {
                 String params = getParams(paramsMap);
-                result = requestPostBySyn(requestUrl, MEDIA_TYPE_JSON, params, headers);
+                result = requestPostBySyn(requestUrl, MEDIA_TYPE_FORM, params, headers);
             } else {
                 logger.error("请求内容不能为空，请求路径为 " + requestUrl);
             }
@@ -203,7 +203,7 @@ public class OkHttpRequestManager {
      */
     public String requestPostBySyn(String requestUrl, MediaType mediaType, File file, Map<String, String> headers) {
         if (null == mediaType) {
-            mediaType = MEDIA_TYPE_JSON;
+            mediaType = MEDIA_TYPE_FORM;
         }
         return postBySyn(addHeaders(headers).url(requestUrl), RequestBody.create(mediaType, file));
     }
@@ -292,7 +292,7 @@ public class OkHttpRequestManager {
         try {
             if (null != paramsMap && paramsMap.size() > 0) {
                 String params = getParams(paramsMap);
-                final Request request = addHeaders(headers).post(RequestBody.create(MEDIA_TYPE_JSON, params)).build();
+                final Request request = addHeaders(headers).post(RequestBody.create(MEDIA_TYPE_FORM, params)).build();
                 mOkHttpClient.newCall(request).enqueue(callback);
             } else {
                 logger.error("请求内容不能为空，请求路径为 " + requestUrl);
@@ -313,7 +313,7 @@ public class OkHttpRequestManager {
      */
     public void requestPostByAsyn(String requestUrl, MediaType mediaType, String content, Map<String, String> headers, Callback callback) {
         if (null == mediaType) {
-            mediaType = MEDIA_TYPE_JSON;
+            mediaType = MEDIA_TYPE_FORM;
         }
         final Request request = addHeaders(headers).post(RequestBody.create(mediaType, content)).build();
         mOkHttpClient.newCall(request).enqueue(callback);

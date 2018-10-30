@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" href="/asset/css/font.css">
+    <link rel="stylesheet" href="/asset/css/weadmin.css">
+    <script src="/asset/lib/md5.js" charset="utf-8"></script>
+    <script src="/asset/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body class="login-bg">
+
+<div class="login">
+    <div class="message">登录</div>
+    <div id="darkbannerwrap"></div>
+    <form method="post" class="layui-form">
+        <input id="username" name="loginForm.userName" placeholder="用户名" type="text" lay-verify="username" class="layui-input">
+        <hr class="hr15">
+        <input id="password" lay-verify="password" placeholder="密码" type="password" class="layui-input">
+        <hr class="hr15">
+        <input id="captcha" name="loginForm.captcha" lay-verify="captcha" placeholder="验证码" type="text" class="layui-input">
+        <img class="captcha" src='/captcha' title="点击更换验证码" onclick="this.src='/captcha?d='+Math.random();"/>
+        <hr class="hr15">
+        <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+        <hr class="hr20">
+    </form>
+</div>
+<script src="/asset/js/login.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.extend({
+        admin: '{/}./asset/js/admin'
+    });
+</script>
+</body>
+</html>

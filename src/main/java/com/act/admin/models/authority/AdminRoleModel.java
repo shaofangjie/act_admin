@@ -23,6 +23,9 @@ public class AdminRoleModel extends BaseModel {
     @Column(name = "role_name", length = 100, unique = true, nullable = false)
     public String roleName;
 
+    @OneToMany(mappedBy = "adminRole", fetch = FetchType.LAZY)
+    private List<AdminModel> admin;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "adminRoles")
     public List<AdminResourcesModel> adminRoleResources;
 
