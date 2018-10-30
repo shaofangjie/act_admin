@@ -32,7 +32,11 @@ public class BaseService {
     }
 
     public AdminModel getAdminById(Long id) {
-        return AdminModel.find.query().fetchLazy("adminRole.adminRoleResources").where(Expr.eq("id", id)).findOne();
+        return AdminModel.find.query()
+                .fetchLazy("adminRole.adminRoleResources")
+                .fetchLazy("adminRole.adminRoleResources.sourcePid")
+                .where(Expr.eq("id", id))
+                .findOne();
     }
 
     public JSONObject getMenuJsonByAdminId(Long adminId) {
