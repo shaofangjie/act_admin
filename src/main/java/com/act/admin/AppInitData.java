@@ -50,47 +50,47 @@ public class AppInitData {
                 adminResources2.save();
 
                 AdminResourcesModel adminResources3 = new AdminResourcesModel();
-                adminResources3.sourcePid = adminResources1;
+                adminResources3.sourcePid = adminResources2;
                 adminResources3.sourceType = 1;
                 adminResources3.iconfont = "&#xe6a7;";
                 adminResources3.sourceName = "权限资源列表";
                 adminResources3.sourceUrl = "/authority/AdminResources/list";
                 adminResources3.sourceFunction = "authority.AdminResources.list";
                 adminResources3.enabled = true;
-                adminResources3.sourceOrder = 1;
+                adminResources3.sourceOrder = 2;
                 adminResources3.save();
 
                 AdminResourcesModel adminResources4 = new AdminResourcesModel();
-                adminResources4.sourcePid = adminResources1;
-                adminResources4.sourceType = 0;
+                adminResources4.sourcePid = adminResources2;
+                adminResources4.sourceType = 2;
                 adminResources4.iconfont = "&#xe6a7;";
                 adminResources4.sourceName = "添加权限资源";
                 adminResources4.sourceUrl = "/authority/AdminResources/add";
                 adminResources4.sourceFunction = "authority.AdminResources.add";
                 adminResources4.enabled = true;
-                adminResources4.sourceOrder = 1;
+                adminResources4.sourceOrder = 3;
                 adminResources4.save();
 
                 AdminResourcesModel adminResources5 = new AdminResourcesModel();
-                adminResources5.sourcePid = adminResources1;
-                adminResources5.sourceType = 0;
+                adminResources5.sourcePid = adminResources2;
+                adminResources5.sourceType = 2;
                 adminResources5.iconfont = "&#xe6a7;";
                 adminResources5.sourceName = "修改权限资源";
                 adminResources5.sourceUrl = "/authority/AdminResources/edit";
                 adminResources5.sourceFunction = "authority.AdminResources.edit";
                 adminResources5.enabled = true;
-                adminResources5.sourceOrder = 1;
+                adminResources5.sourceOrder = 4;
                 adminResources5.save();
 
                 AdminResourcesModel adminResources6 = new AdminResourcesModel();
-                adminResources6.sourcePid = adminResources1;
-                adminResources6.sourceType = 0;
+                adminResources6.sourcePid = adminResources2;
+                adminResources6.sourceType = 2;
                 adminResources6.iconfont = "&#xe6a7;";
                 adminResources6.sourceName = "删除权限资源";
                 adminResources6.sourceUrl = "/authority/AdminResources/del";
                 adminResources6.sourceFunction = "authority.AdminResources.del";
                 adminResources6.enabled = true;
-                adminResources6.sourceOrder = 1;
+                adminResources6.sourceOrder = 5;
                 adminResources6.save();
 
                 //初始化角色信息

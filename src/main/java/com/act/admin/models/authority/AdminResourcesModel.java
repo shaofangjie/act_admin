@@ -23,7 +23,7 @@ public class AdminResourcesModel extends BaseModel {
     public List<AdminRoleModel> adminRoles;
 
     @Column(name = "source_type", columnDefinition = "integer default 0")
-    public int sourceType; //资源类型 0:功能 1:数据
+    public int sourceType; //资源类型 0:菜单 1:数据 2:功能
 
     @Column(name = "iconfont", length = 100, unique = false, nullable = false)
     public String iconfont; //图标

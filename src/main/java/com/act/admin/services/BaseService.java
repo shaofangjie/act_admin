@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.ebean.Expr;
 import org.osgl.http.H;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class BaseService {
             JSONObject topLevelMenu = new JSONObject();
             if (null == topLevelResources.sourcePid) {
                 topLevelMenu.put("id", topLevelResources.getId());
-                topLevelMenu.put("order", topLevelResources.getId());
+                topLevelMenu.put("order", topLevelResources.sourceOrder);
                 topLevelMenu.put("url", topLevelResources.sourceUrl);
                 topLevelMenu.put("name", topLevelResources.sourceName);
                 topLevelMenu.put("iconfont", topLevelResources.iconfont);
@@ -61,9 +62,9 @@ public class BaseService {
             JSONArray senondLevelMenuJson = new JSONArray();
             for (AdminResourcesModel secondLevelResources : adminResourcesList) {
                 JSONObject secondLevelMenu = new JSONObject();
-                if (null != secondLevelResources.sourcePid && secondLevelResources.sourcePid.getId().equals(topLevelResources.getId())) {
+                if (0 == secondLevelResources.sourceType && null != secondLevelResources.sourcePid && secondLevelResources.sourcePid.getId().equals(topLevelResources.getId())) {
                     secondLevelMenu.put("id", secondLevelResources.getId());
-                    secondLevelMenu.put("order", secondLevelResources.getId());
+                    secondLevelMenu.put("order", secondLevelResources.sourceOrder);
                     secondLevelMenu.put("url", secondLevelResources.sourceUrl);
                     secondLevelMenu.put("name", secondLevelResources.sourceName);
                     secondLevelMenu.put("iconfont", secondLevelResources.iconfont);
@@ -72,20 +73,22 @@ public class BaseService {
                 JSONArray threeLevelMenuJson = new JSONArray();
                 for (AdminResourcesModel threeLevelResources : adminResourcesList) {
                     JSONObject threeLevelMenu = new JSONObject();
-                    if (null != threeLevelResources.sourcePid && threeLevelResources.sourcePid.getId().equals(secondLevelResources.getId())) {
-                        threeLevelMenu.put("id", secondLevelResources.getId());
-                        threeLevelMenu.put("order", secondLevelResources.getId());
-                        threeLevelMenu.put("url", secondLevelResources.sourceUrl);
-                        threeLevelMenu.put("name", secondLevelResources.sourceName);
-                        threeLevelMenu.put("iconfont", secondLevelResources.iconfont);
+                    if (0 == threeLevelResources.sourceType && null != threeLevelResources.sourcePid && threeLevelResources.sourcePid.getId().equals(secondLevelResources.getId())) {
+                        threeLevelMenu.put("id", threeLevelResources.getId());
+                        threeLevelMenu.put("order", threeLevelResources.sourceOrder);
+                        threeLevelMenu.put("url", threeLevelResources.sourceUrl);
+                        threeLevelMenu.put("name", threeLevelResources.sourceName);
+                        threeLevelMenu.put("iconfont", threeLevelResources.iconfont);
                         threeLevelMenuJson.add(threeLevelMenu);
                     }
                 }
+                threeLevelMenuJson.sort(Comparator.comparing(obj -> ((JSONObject) obj).getInteger("order")));
                 secondLevelMenu.put("sub", threeLevelMenuJson);
             }
+            senondLevelMenuJson.sort(Comparator.comparing(obj -> ((JSONObject) obj).getInteger("order")));
             topLevelMenu.put("sub", senondLevelMenuJson);
         }
-
+        topLevelMenuJson.sort(Comparator.comparing(obj -> ((JSONObject) obj).getInteger("order")));
         menuJson.put("menu", topLevelMenuJson);
 
         return menuJson;
