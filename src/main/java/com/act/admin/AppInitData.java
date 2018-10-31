@@ -33,7 +33,7 @@ public class AppInitData {
                 adminResources1.iconfont = "&#xe726;";
                 adminResources1.sourceName = "权限管理";
                 adminResources1.sourceUrl = "/authority/AdminResources/index";
-                adminResources1.sourceFunction = "authority.AdminResources.index";
+                adminResources1.sourceFunction = "authority.AuthorityResourcesController.index";
                 adminResources1.enabled = true;
                 adminResources1.sourceOrder = 1;
                 adminResources1.save();
@@ -44,7 +44,7 @@ public class AppInitData {
                 adminResources2.iconfont = "&#xe6a7;";
                 adminResources2.sourceName = "权限资源";
                 adminResources2.sourceUrl = "/authority/AdminResources/index";
-                adminResources2.sourceFunction = "authority.AdminResources.index";
+                adminResources2.sourceFunction = "authority.AuthorityResourcesController.index";
                 adminResources2.enabled = true;
                 adminResources2.sourceOrder = 1;
                 adminResources2.save();
@@ -55,7 +55,7 @@ public class AppInitData {
                 adminResources3.iconfont = "&#xe6a7;";
                 adminResources3.sourceName = "权限资源列表";
                 adminResources3.sourceUrl = "/authority/AdminResources/list";
-                adminResources3.sourceFunction = "authority.AdminResources.list";
+                adminResources3.sourceFunction = "authority.AuthorityResourcesController.list";
                 adminResources3.enabled = true;
                 adminResources3.sourceOrder = 2;
                 adminResources3.save();
@@ -66,7 +66,7 @@ public class AppInitData {
                 adminResources4.iconfont = "&#xe6a7;";
                 adminResources4.sourceName = "添加权限资源";
                 adminResources4.sourceUrl = "/authority/AdminResources/add";
-                adminResources4.sourceFunction = "authority.AdminResources.add";
+                adminResources4.sourceFunction = "authority.AuthorityResourcesController.add";
                 adminResources4.enabled = true;
                 adminResources4.sourceOrder = 3;
                 adminResources4.save();
@@ -77,7 +77,7 @@ public class AppInitData {
                 adminResources5.iconfont = "&#xe6a7;";
                 adminResources5.sourceName = "修改权限资源";
                 adminResources5.sourceUrl = "/authority/AdminResources/edit";
-                adminResources5.sourceFunction = "authority.AdminResources.edit";
+                adminResources5.sourceFunction = "authority.AuthorityResourcesController.edit";
                 adminResources5.enabled = true;
                 adminResources5.sourceOrder = 4;
                 adminResources5.save();

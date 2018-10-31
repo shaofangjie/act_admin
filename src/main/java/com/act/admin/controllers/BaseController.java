@@ -16,6 +16,7 @@ import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.Result;
 import org.osgl.storage.ISObject;
 import org.osgl.storage.IStorageService;
+import org.osgl.util.E;
 import org.osgl.util.IO;
 
 import javax.inject.Inject;
@@ -74,7 +75,7 @@ public class BaseController extends Controller.Util {
         if (null != file) {
             String allowedFileType = conf.get("upload.file.type").toString();
             if (StringUtils.isEmpty(allowedFileType)) {
-                return buildFailedResult("请配置允许上传的文件类型", null);
+                return buildErrorResult("请配置允许上传的文件类型", null);
             }
             String contentType = file.getAttribute(ATTR_CONTENT_TYPE);
             String fileName = file.getAttribute(ATTR_FILE_NAME);
@@ -93,11 +94,11 @@ public class BaseController extends Controller.Util {
                     }
                     return buildSuccessResult(success);
                 }
-                return buildFailedResult("文件类型不支持", null);
+                return buildErrorResult("文件类型不支持", null);
             }
-            return buildFailedResult("无法获得上传文件的类型", null);
+            return buildErrorResult("无法获得上传文件的类型", null);
         }
-        return buildFailedResult("请选择文件", null);
+        return buildErrorResult("请选择文件", null);
     }
 
     public JSONObject getViolationErrMsg(ActionContext context) {
@@ -108,6 +109,14 @@ public class BaseController extends Controller.Util {
         return error;
     }
 
+    public String getViolationErrStr(ActionContext context) {
+        StringBuilder msg = new StringBuilder();
+        context.violations().forEach((k, v) -> {
+            msg.append(v.getMessageTemplate());
+            msg.append(";");
+        });
+        return msg.toString();
+    }
 
     public JSONObject buildSuccessResult(JSONObject extraInfo) {
         JSONObject result = buildSuccessResult("");
@@ -122,7 +131,7 @@ public class BaseController extends Controller.Util {
         return result;
     }
 
-    public JSONObject buildFailedResult(String msg, JSONObject detailErr) {
+    public JSONObject buildErrorResult(String msg, JSONObject detailErr) {
         JSONObject result = new JSONObject();
         result.put("errcode", 1);
         if (null == detailErr) {
@@ -135,13 +144,13 @@ public class BaseController extends Controller.Util {
         return result;
     }
 
-    public JSONObject makeSearchResult(List<Object> pageData, int total, int draw) {
+    public JSONObject buildTableResult(int code, String msg, int count, List<Object> pageData) {
 
         JSONObject result = new JSONObject();
-
-        result.put("pageData", pageData);
-        result.put("total", total);
-        result.put("draw", draw);
+        result.put("data", pageData);
+        result.put("count", count);
+        result.put("code", code);
+        result.put("msg", msg);
 
         return result;
 

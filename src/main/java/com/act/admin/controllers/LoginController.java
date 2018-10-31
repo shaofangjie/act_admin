@@ -52,7 +52,7 @@ public class LoginController extends BaseController implements MainConsts {
 
         if (context.hasViolation()) {
             JSONObject error = getViolationErrMsg(context);
-            return renderJson(buildFailedResult("", error));
+            return renderJson(buildErrorResult("", error));
         }
 
         LoginResult loginResult = loginService.handleLogin(session, context, loginForm);
@@ -61,11 +61,11 @@ public class LoginController extends BaseController implements MainConsts {
             case LOGIN_SUCCESS:
                 return renderJson(buildSuccessResult("登录成功"));
             case CAPTCHA_FAILED:
-                return renderJson(buildFailedResult("验证码错误", null));
+                return renderJson(buildErrorResult("验证码错误", null));
             case LOGIN_FAILED:
-                return renderJson(buildFailedResult("登录失败,请重试.", null));
+                return renderJson(buildErrorResult("登录失败,请重试.", null));
             case USERNAME_PWD_FAILED:
-                return renderJson(buildFailedResult("用户名或密码错误", null));
+                return renderJson(buildErrorResult("用户名或密码错误", null));
             default:
                 throw new BadRequest();
         }

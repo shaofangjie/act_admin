@@ -1,6 +1,6 @@
 package com.act.admin.services.authority;
 
-import com.act.admin.constraints.authority.AdminConsts;
+import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.services.BaseService;
 
 /**
@@ -10,5 +10,5 @@ import com.act.admin.services.BaseService;
  * Date: 2018-10-28
  * Time: 5:22 PM
  */
-public class AdminService extends BaseService implements AdminConsts {
+public class AdminService extends BaseService implements AuthorityConsts {
 }

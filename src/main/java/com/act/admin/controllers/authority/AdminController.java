@@ -1,6 +1,6 @@
 package com.act.admin.controllers.authority;
 
-import com.act.admin.constraints.authority.AdminConsts;
+import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.BaseController;
 
 /**
@@ -11,5 +11,8 @@ import com.act.admin.controllers.BaseController;
  * Time: 5:18 PM
  */
 
-public class AdminController extends BaseController implements AdminConsts {
+public class AdminController extends BaseController implements AuthorityConsts {
+
+
+
 }

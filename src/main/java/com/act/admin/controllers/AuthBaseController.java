@@ -32,9 +32,11 @@ public class AuthBaseController extends BaseController {
     private BaseService baseService;
     @Inject
     private AdminModel loginAdmin;
+    @Inject
+    private ActionContext context;
 
     @Before
-    public void authCheck(H.Request request, H.Session session, ActionContext context) {
+    public void authCheck(H.Request request, H.Session session) {
 
         this.authorizationCheck(request, session);
 
@@ -77,18 +79,15 @@ public class AuthBaseController extends BaseController {
             }
             //下面的判断方式简单，但是有坑。有参数的方法判断有问题
             //ignorePermissionCheck = Class.forName(classsName).getMethod(methodName).isAnnotationPresent(IgnorePermissionCheck.class);
-            if (ignorePermissionCheck) {
-                return true;
-            }
+            return ignorePermissionCheck;
         } catch (Exception e) {
             actionPath = actionPath.replace("com.act.admin.controllers.", "");
             if (hasPermission(actionPath)) {
                 return true;
             } else {
-                throw Controller.Util.redirect("MainController.home");
+                throw forbidden();
             }
         }
-        throw Controller.Util.redirect("MainController.home");
     }
 
     private boolean hasPermission(String actionPath) {

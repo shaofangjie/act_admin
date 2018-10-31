@@ -7,7 +7,7 @@ package com.act.admin.constraints.authority;
  * Date: 2018-10-28
  * Time: 3:00 AM
  */
-public interface AdminConsts {
+public interface AuthorityConsts {
 
 
 }
