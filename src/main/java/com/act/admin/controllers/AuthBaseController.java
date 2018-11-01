@@ -79,27 +79,38 @@ public class AuthBaseController extends BaseController {
             }
             //下面的判断方式简单，但是有坑。有参数的方法判断有问题
             //ignorePermissionCheck = Class.forName(classsName).getMethod(methodName).isAnnotationPresent(IgnorePermissionCheck.class);
-            return ignorePermissionCheck;
-        } catch (Exception e) {
-            actionPath = actionPath.replace("com.act.admin.controllers.", "");
-            if (hasPermission(actionPath)) {
+
+            if (ignorePermissionCheck) {
                 return true;
             } else {
-                throw forbidden();
+                List<String> actionPathList = new ArrayList<>();
+                actionPath = actionPath.replace("com.act.admin.controllers.", "");
+                actionPathList.add(actionPath);
+                actionPathList.add(actionPath + "Handler");
+                if (hasPermission(actionPathList)) {
+                    return true;
+                } else {
+                    throw forbidden();
+                }
             }
+
+        } catch (Exception e) {
+            logger.debug("%s权限校验异常", actionPath);
+            throw forbidden();
         }
     }
 
-    private boolean hasPermission(String actionPath) {
+    private boolean hasPermission(List<String> actionPathList) {
 
         List<AdminResourcesModel> adminRoleResources = loginAdmin.adminRole.adminRoleResources;
-        List<String> resourceFunList = new ArrayList<>();
 
         for (AdminResourcesModel adminResources : adminRoleResources) {
-            resourceFunList.add(adminResources.sourceFunction);
+            if (actionPathList.contains(adminResources.sourceFunction)) {
+                return true;
+            }
         }
 
-        return resourceFunList.contains(actionPath);
+        return false;
     }
 
 }
