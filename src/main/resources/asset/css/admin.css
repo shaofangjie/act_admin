@@ -431,6 +431,12 @@ body {
   position: relative;
   z-index: 100;
 }
+.page-content .layui-tab-title li.home i{
+  padding-right: 5px;
+}
+.page-content .layui-tab-title li.home .layui-tab-close{
+  display: none;
+}
 .page-content .layui-tab-title li {
   line-height: 35px;
 }
@@ -636,4 +642,4 @@ table td {
 .weadmin-notice .layui-carousel-ind ul li.layui-this {
   background-color: #999;
 }
-/*# sourceMappingURL=weadmin.css.map */
+/*# sourceMappingURL=admin.css.map */
