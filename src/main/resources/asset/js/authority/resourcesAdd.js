@@ -63,21 +63,21 @@ layui.use(['form', 'table', 'jquery', 'admin'], function() {
                     $("#reset").click();
                 }else{
                     if(data.detail === 1){
-                        if ($.trim(data.msg["resourceAddForm.resourcePid"]).length !== 0){
+                        if (!isEmptyString(data.msg["resourceAddForm.resourcePid"])){
                             layer.msg(data.msg["resourceAddForm.resourcePid"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.resourceType"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.resourceType"])) {
                             layer.msg(data.msg["resourceAddForm.resourceType"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.enable"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.enable"])) {
                             layer.msg(data.msg["resourceAddForm.enable"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.iconfont"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.iconfont"])) {
                             layer.msg(data.msg["resourceAddForm.iconfont"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.resourceName"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.resourceName"])) {
                             layer.msg(data.msg["resourceAddForm.resourceName"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.resourceUrl"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.resourceUrl"])) {
                             layer.msg(data.msg["resourceAddForm.resourceUrl"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.resourceFun"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.resourceFun"])) {
                             layer.msg(data.msg["resourceAddForm.resourceFun"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["resourceAddForm.resourceOrder"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["resourceAddForm.resourceOrder"])) {
                             layer.msg(data.msg["resourceAddForm.resourceOrder"], {time: 2000, icon:5});
                         }
 

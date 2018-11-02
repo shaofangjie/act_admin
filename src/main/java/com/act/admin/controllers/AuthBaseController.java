@@ -14,6 +14,7 @@ import org.osgl.mvc.annotation.Before;
 
 import javax.inject.Inject;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,11 +29,11 @@ public class AuthBaseController extends BaseController {
     private static Logger logger = L.get(AuthBaseController.class);
 
     @Inject
+    private ActionContext context;
+    @Inject
     private BaseService baseService;
     @Inject
     private AdminModel loginAdmin;
-    @Inject
-    private ActionContext context;
 
     @Before
     public void authCheck(H.Request request, H.Session session) {
@@ -43,6 +44,19 @@ public class AuthBaseController extends BaseController {
 
         this.checkPermission(context);
 
+        this.renderArgs();
+
+    }
+
+    private void renderArgs() {
+
+        List<String> adminResourcesFunList = new ArrayList<>();
+
+        for (AdminResourcesModel adminResources : loginAdmin.adminRole.adminRoleResources) {
+            adminResourcesFunList.add(adminResources.sourceFunction);
+        }
+
+        context.renderArg("adminResourcesFunList", adminResourcesFunList);
     }
 
     private void getLoginAdminInfo(H.Session session) {
@@ -96,7 +110,7 @@ public class AuthBaseController extends BaseController {
         }
     }
 
-    private boolean hasPermission(String actionPath) {
+    public boolean hasPermission(String actionPath) {
 
         List<AdminResourcesModel> adminRoleResources = loginAdmin.adminRole.adminRoleResources;
 

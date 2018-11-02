@@ -60,19 +60,16 @@
         <dependency>
             <groupId>org.actframework</groupId>
             <artifactId>act-ebean</artifactId>
-            <version>1.7.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.actframework/act-beetl -->
         <dependency>
             <groupId>org.actframework</groupId>
             <artifactId>act-beetl</artifactId>
-            <version>1.4.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.actframework/act-storage -->
         <dependency>
             <groupId>org.actframework</groupId>
             <artifactId>act-storage</artifactId>
-            <version>0.13.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
         <dependency>

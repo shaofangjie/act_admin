@@ -16,7 +16,6 @@ import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.Result;
 import org.osgl.storage.ISObject;
 import org.osgl.storage.IStorageService;
-import org.osgl.util.E;
 import org.osgl.util.IO;
 
 import javax.inject.Inject;

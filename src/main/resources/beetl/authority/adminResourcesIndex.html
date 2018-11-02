@@ -36,7 +36,12 @@
         </form>
     </div>
     <div class="weadmin-block">
+        <%if(@adminResourcesFunList.contains("authority.AuthorityResourcesController.add")) {%>
         <button class="layui-btn" onclick="addPage('添加权限资源','/authority/AdminResources/add')"><i class="layui-icon">&#xe654;</i>添加</button>
+        <%} else {%>
+        <button class="layui-btn layui-btn-disabled"><i class="layui-icon">&#xe654;</i>添加</button>
+        <%}%>
+
         <span class="fr" style="line-height:40px"></span>
     </div>
 
@@ -60,13 +65,16 @@
     {{#  } }}
 </script>
 <script type="text/html" id="operation">
-    {{#  if(d.enabled == 1){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="disable">停用</a>
-    {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" lay-event="enable">启用</a>
-    {{#  } }}
+    <%if(@adminResourcesFunList.contains("authority.AuthorityResourcesController.edit")) {%>
     <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    <%} else {%>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">修改</a>
+    <%}%>
+    <%if(@adminResourcesFunList.contains("authority.AuthorityResourcesController.del")) {%>
     <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+    <%} else {%>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    <%}%>
 </script>
 <script src="/asset/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/asset/js/authority/resourcesIndex.js" type="text/javascript" charset="utf-8"></script>

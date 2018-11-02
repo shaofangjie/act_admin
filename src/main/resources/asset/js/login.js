@@ -5,19 +5,19 @@ layui.use(['form', 'admin', 'jquery'], function () {
     form.verify({
         username: function (value) {
             var reg = /^[a-zA-Z0-9]\w{3,19}$/;
-            if ($.trim(value).length === 0) {
+            if (isEmptyString(value)) {
                 return "请输入用户名";
             } else if(!reg.test(value)){
                 return "帐号只能为4-20位的数字字母下划线组合，且不能以下划线开头。";
             }
         },
         password: function (value) {
-            if ($.trim(value).length === 0) {
+            if (isEmptyString(value)) {
                 return "请输入密码";
             }
         },
         captcha: function (value) {
-            if ($.trim(value).length === 0) {
+            if (isEmptyString(value)) {
                 return "请输入验证码";
             }
         }
@@ -38,11 +38,11 @@ layui.use(['form', 'admin', 'jquery'], function () {
                     window.location.href='/'
                 }else{
                     if(data.detail === 1){
-                        if ($.trim(data.msg["loginForm.userName"]).length !== 0){
+                        if (!isEmptyString(data.msg["loginForm.userName"])){
                             layer.msg(data.msg["loginForm.userName"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["loginForm.password"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["loginForm.password"])) {
                             layer.msg(data.msg["loginForm.password"], {time: 2000, icon:5});
-                        } else if ($.trim(data.msg["loginForm.captcha"]).length !== 0) {
+                        } else if (!isEmptyString(data.msg["loginForm.captcha"])) {
                             layer.msg(data.msg["loginForm.captcha"], {time: 2000, icon:5});
                         }
 
