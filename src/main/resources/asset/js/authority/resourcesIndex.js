@@ -2,11 +2,21 @@ layui.config({
     base: '/asset/js/'
     , version: 'v1'
 }).use('admin');
-layui.use(['table', 'jquery', 'admin'], function() {
+layui.use(['form', 'table', 'jquery', 'admin'], function() {
     var $ = layui.jquery,
+        form = layui.form,
         table = layui.table,
         admin = layui.admin;
-    console.log(table);
+
+    form.verify({
+        sourceName: function (value) {
+            var reg = /^[\u4E00-\u9FA5A-Za-z0-9_]{3,17}$/;
+            if(!isEmptyString(value) && !reg.test(value)){
+                return "资源名格式非法";
+            }
+        }
+    });
+
     var queryParams=function () {
         var param={resourceSearchForm:{}};
         param.resourceSearchForm.orderColumn = "whenCreated";
@@ -16,14 +26,15 @@ layui.use(['table', 'jquery', 'admin'], function() {
     };
 
     var resourceTable=table.render({
-        elem: '#resourcesList'
-        , limits: [20,40, 60, 100, 150, 300]
-        , limit:20
-        , skin: '#1E9FFF' //自定义选中色值
-        , loading: true
-        , method: 'POST'
-        , page: true //开启分页
-        , cols: [[
+        elem: '#resourcesList',
+        limits: [20,40, 60, 100, 150, 300],
+        limit:20,
+        skin: '#1E9FFF', //自定义选中色值
+        loading: true,
+        method: 'POST',
+        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+        page: true, //开启分页
+        cols: [[
             {field: 'id', title: 'ID', width: '10%'},
             {title: '资源类型',  width: '10%', templet: '#type'},
             {field: 'sourceName', title: '资源名称', width: '20%'},
@@ -31,12 +42,12 @@ layui.use(['table', 'jquery', 'admin'], function() {
             {field: 'sourceFunction', title: '资源方法', width: '30%'},
             {title: '是否启用', width: '10%', templet: '#enableOperation'},
             {title: '操作', width: '10%', templet: '#operation'}
-        ]]
-        ,url: '/authority/AdminResources/list'
-        ,where:queryParams()
+        ]],
+        url: '/authority/AdminResources/list',
+        where:queryParams()
     });
 
-    $("#searchBut").click(function () {
+    form.on('submit(searchBut)', function (data) {
         resourceTable.reload({
             where: queryParams()
         });

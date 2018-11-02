@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加权限资源</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/asset/css/font.css">
+    <link rel="stylesheet" href="/asset/css/admin.css">
+</head>
+<body>
+<div class="weadmin-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane ok-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">父级资源</label>
+            <div class="layui-input-block">
+                <select name="resourceAddForm.resourcePid">
+                    <%
+                    for(resource in allParentResources){
+                    %>
+                    <option value="${resource.id}">${resource.name}</option>
+                    <%}%>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源类型</label>
+            <div class="layui-input-block">
+                <select name="resourceAddForm.resourceType">
+                    <option value="0">菜单</option>
+                    <option value="1">数据</option>
+                    <option value="2">功能</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="resourceAddForm.enable" lay-skin="switch" lay-text="启用|停用" checked value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="resourceAddForm.iconfont" placeholder="请输入资源图标" autocomplete="off" class="layui-input" lay-verify="iconfont">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="resourceAddForm.resourceName" placeholder="请输入资源名称" autocomplete="off" class="layui-input" lay-verify="resourceName">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源路由</label>
+            <div class="layui-input-block">
+                <input type="text" name="resourceAddForm.resourceUrl" placeholder="请输入资源路由" autocomplete="off" class="layui-input" lay-verify="resourceUrl">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源方法</label>
+            <div class="layui-input-block">
+                <input type="text" name="resourceAddForm.resourceFun" placeholder="请输入资源方法" autocomplete="off" class="layui-input" lay-verify="resourceFun">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="resourceAddForm.resourceOrder" placeholder="请输入资源排序ID" autocomplete="off" class="layui-input" lay-verify="resourceOrder">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
+                <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/asset/lib/layui/layui.js"></script>
+<script src="/asset/js/authority/resourcesAdd.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

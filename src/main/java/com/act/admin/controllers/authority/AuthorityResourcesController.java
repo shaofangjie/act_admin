@@ -4,6 +4,7 @@ import act.app.ActionContext;
 import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
+import com.act.admin.forms.authority.ResourceAddForm;
 import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.results.authority.AdminResourceResult;
@@ -13,6 +14,7 @@ import io.ebean.PagedList;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
 import org.osgl.mvc.annotation.ResponseStatus;
+import org.osgl.mvc.result.BadRequest;
 import org.osgl.mvc.result.Result;
 
 import javax.inject.Inject;
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +40,6 @@ public class AuthorityResourcesController extends AuthBaseController implements 
     private AuthorityResourcesService authorityResourcesService;
 
     public Result index() {
-
         return render("/authority/adminResourcesIndex.html");
     }
 
@@ -67,6 +69,35 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
 
         return renderJson(adminResourceJson);
+    }
+
+    public Result add() {
+
+        List<Map<String, String>> allParentResources = authorityResourcesService.getAllParentResources();
+
+        return render("/authority/adminResourceAdd.html", allParentResources);
+    }
+
+    public Result addHandler(@Valid ResourceAddForm resourceAddForm, ActionContext context) {
+
+        if (context.hasViolation()) {
+            JSONObject error = getViolationErrMsg(context);
+            return renderJson(buildErrorResult("", error));
+        }
+
+        AdminResourceAddResult adminResourceAddResult = authorityResourcesService.adminResourceSave(resourceAddForm);
+
+        switch (adminResourceAddResult) {
+            case ADD_SUCCESS:
+                return renderJson(buildSuccessResult("添加成功"));
+            case PARENT_IS_NULL:
+                return renderJson(buildErrorResult("父级资源不存在", null));
+            case ADD_FAILED:
+                return renderJson(buildErrorResult("添加失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
     }
 
 }

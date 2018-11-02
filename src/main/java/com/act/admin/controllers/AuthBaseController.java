@@ -14,7 +14,6 @@ import org.osgl.mvc.annotation.Before;
 
 import javax.inject.Inject;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,11 +82,8 @@ public class AuthBaseController extends BaseController {
             if (ignorePermissionCheck) {
                 return true;
             } else {
-                List<String> actionPathList = new ArrayList<>();
                 actionPath = actionPath.replace("com.act.admin.controllers.", "");
-                actionPathList.add(actionPath);
-                actionPathList.add(actionPath + "Handler");
-                if (hasPermission(actionPathList)) {
+                if (hasPermission(actionPath)) {
                     return true;
                 } else {
                     throw forbidden();
@@ -95,17 +91,17 @@ public class AuthBaseController extends BaseController {
             }
 
         } catch (Exception e) {
-            logger.debug("%s权限校验异常", actionPath);
+            logger.debug("%s权限校验异常%s", actionPath, e);
             throw forbidden();
         }
     }
 
-    private boolean hasPermission(List<String> actionPathList) {
+    private boolean hasPermission(String actionPath) {
 
         List<AdminResourcesModel> adminRoleResources = loginAdmin.adminRole.adminRoleResources;
 
         for (AdminResourcesModel adminResources : adminRoleResources) {
-            if (actionPathList.contains(adminResources.sourceFunction)) {
+            if (actionPath.equals(adminResources.sourceFunction) || actionPath.equals(adminResources.sourceFunction + "Handler")) {
                 return true;
             }
         }

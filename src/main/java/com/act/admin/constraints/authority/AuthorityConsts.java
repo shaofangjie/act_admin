@@ -9,5 +9,10 @@ package com.act.admin.constraints.authority;
  */
 public interface AuthorityConsts {
 
+    enum AdminResourceAddResult {
+        ADD_FAILED,
+        ADD_SUCCESS,
+        PARENT_IS_NULL
+    }
 
 }
