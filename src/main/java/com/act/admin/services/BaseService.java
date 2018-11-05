@@ -44,41 +44,41 @@ public class BaseService {
 
         AdminModel admin = getAdminById(adminId);
 
-        List<AdminResourcesModel> adminResourcesList = admin.adminRole.adminRoleResources;
+        List<AdminResourcesModel> adminResourcesList = admin.getAdminRole().getAdminRoleResources();
 
         JSONObject menuJson = new JSONObject();
 
         JSONArray topLevelMenuJson = new JSONArray();
         for (AdminResourcesModel topLevelResources : adminResourcesList) {
             JSONObject topLevelMenu = new JSONObject();
-            if (null == topLevelResources.sourcePid) {
+            if (0 == topLevelResources.getSourceType() && topLevelResources.isEnabled() && null == topLevelResources.getSourcePid()) {
                 topLevelMenu.put("id", topLevelResources.getId());
-                topLevelMenu.put("order", topLevelResources.sourceOrder);
-                topLevelMenu.put("url", topLevelResources.sourceUrl);
-                topLevelMenu.put("name", topLevelResources.sourceName);
-                topLevelMenu.put("iconfont", topLevelResources.iconfont);
+                topLevelMenu.put("order", topLevelResources.getSourceOrder());
+                topLevelMenu.put("url", topLevelResources.getSourceUrl());
+                topLevelMenu.put("name", topLevelResources.getSourceName());
+                topLevelMenu.put("iconfont", topLevelResources.getIconfont());
                 topLevelMenuJson.add(topLevelMenu);
             }
             JSONArray senondLevelMenuJson = new JSONArray();
             for (AdminResourcesModel secondLevelResources : adminResourcesList) {
                 JSONObject secondLevelMenu = new JSONObject();
-                if (0 == secondLevelResources.sourceType && null != secondLevelResources.sourcePid && secondLevelResources.sourcePid.getId().equals(topLevelResources.getId())) {
+                if (0 == secondLevelResources.getSourceType() && secondLevelResources.isEnabled() && null != secondLevelResources.getSourcePid() && secondLevelResources.getSourcePid().getId().equals(topLevelResources.getId())) {
                     secondLevelMenu.put("id", secondLevelResources.getId());
-                    secondLevelMenu.put("order", secondLevelResources.sourceOrder);
-                    secondLevelMenu.put("url", secondLevelResources.sourceUrl);
-                    secondLevelMenu.put("name", secondLevelResources.sourceName);
-                    secondLevelMenu.put("iconfont", secondLevelResources.iconfont);
+                    secondLevelMenu.put("order", secondLevelResources.getSourceOrder());
+                    secondLevelMenu.put("url", secondLevelResources.getSourceUrl());
+                    secondLevelMenu.put("name", secondLevelResources.getSourceName());
+                    secondLevelMenu.put("iconfont", secondLevelResources.getIconfont());
                     senondLevelMenuJson.add(secondLevelMenu);
                 }
                 JSONArray threeLevelMenuJson = new JSONArray();
                 for (AdminResourcesModel threeLevelResources : adminResourcesList) {
                     JSONObject threeLevelMenu = new JSONObject();
-                    if (0 == threeLevelResources.sourceType && null != threeLevelResources.sourcePid && threeLevelResources.sourcePid.getId().equals(secondLevelResources.getId())) {
+                    if (0 == threeLevelResources.getSourceType() && threeLevelResources.isEnabled() && null != threeLevelResources.getSourcePid() && threeLevelResources.getSourcePid().getId().equals(secondLevelResources.getId())) {
                         threeLevelMenu.put("id", threeLevelResources.getId());
-                        threeLevelMenu.put("order", threeLevelResources.sourceOrder);
-                        threeLevelMenu.put("url", threeLevelResources.sourceUrl);
-                        threeLevelMenu.put("name", threeLevelResources.sourceName);
-                        threeLevelMenu.put("iconfont", threeLevelResources.iconfont);
+                        threeLevelMenu.put("order", threeLevelResources.getSourceOrder());
+                        threeLevelMenu.put("url", threeLevelResources.getSourceUrl());
+                        threeLevelMenu.put("name", threeLevelResources.getSourceName());
+                        threeLevelMenu.put("iconfont", threeLevelResources.getIconfont());
                         threeLevelMenuJson.add(threeLevelMenu);
                     }
                 }

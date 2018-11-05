@@ -2,6 +2,7 @@ package com.act.admin.services.authority;
 
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.forms.authority.ResourceAddForm;
+import com.act.admin.forms.authority.ResourceEditForm;
 import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.services.BaseService;
@@ -59,7 +60,6 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
             return pagedList;
 
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("查询后台资源列表出现错误: %s" + ex.getMessage());
             Ebean.rollbackTransaction();
         } finally {
@@ -78,7 +78,7 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
             AdminResourcesModel newResource = new AdminResourcesModel();
 
             if ("0".equals(resourceAddForm.getResourcePid())) {
-                newResource.sourcePid = parentResource;
+                newResource.setSourcePid(null);
             } else {
                 parentResource = AdminResourcesModel.find.byId(Long.parseLong(resourceAddForm.getResourcePid()));
                 if (null == parentResource) {
@@ -86,23 +86,66 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
                 }
             }
 
-            newResource.sourcePid = parentResource;
-            newResource.sourceType = Integer.parseInt(resourceAddForm.getResourceType());
-            newResource.enabled = null != resourceAddForm.getEnable() && "1".equals(resourceAddForm.getEnable());
-            newResource.sourceName = resourceAddForm.getResourceName();
-            newResource.sourceUrl = resourceAddForm.getResourceUrl();
-            newResource.sourceFunction = resourceAddForm.getResourceFun();
-            newResource.sourceOrder = Integer.parseInt(resourceAddForm.getResourceOrder());
-            newResource.iconfont = resourceAddForm.getIconfont();
+            newResource.setSourcePid(parentResource);
+            newResource.setSourceType(Integer.parseInt(resourceAddForm.getResourceType()));
+            newResource.setEnabled(null != resourceAddForm.getEnable() && "1".equals(resourceAddForm.getEnable()));
+            newResource.setSourceName(resourceAddForm.getResourceName());
+            newResource.setSourceUrl(resourceAddForm.getResourceUrl());
+            newResource.setSourceFunction(resourceAddForm.getResourceFun());
+            newResource.setSourceOrder(Integer.parseInt(resourceAddForm.getResourceOrder()));
+            newResource.setIconfont(resourceAddForm.getIconfont());
             newResource.save();
 
             Ebean.commitTransaction();
             return AdminResourceAddResult.ADD_SUCCESS;
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("保存后台资源出现错误: %s" + ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminResourceAddResult.ADD_FAILED;
+        } finally {
+            Ebean.endTransaction();
+        }
+
+    }
+
+    public AdminResourceEditResult adminResourceUpdate(ResourceEditForm resourceEditForm) {
+        try {
+            Ebean.beginTransaction();
+
+            AdminResourcesModel adminResource = AdminResourcesModel.find.byId(Long.parseLong(resourceEditForm.getResourceId()));
+
+            AdminResourcesModel parentResource = null;
+
+            if (null == adminResource) {
+                return AdminResourceEditResult.RESOURCE_IS_NULL;
+            }
+
+            if (resourceEditForm.getResourcePid().equals("0")) {
+                adminResource.setSourcePid(null);
+            } else {
+                parentResource = AdminResourcesModel.find.byId(Long.parseLong(resourceEditForm.getResourcePid()));
+                if (null == parentResource) {
+                    return AdminResourceEditResult.PARENT_IS_NULL;
+                }
+            }
+
+            adminResource.setSourcePid(parentResource);
+            adminResource.setSourceType(Integer.parseInt(resourceEditForm.getResourceType()));
+            adminResource.setEnabled(null != resourceEditForm.getEnable() && "1".equals(resourceEditForm.getEnable()));
+            adminResource.setSourceName(resourceEditForm.getResourceName());
+            adminResource.setSourceUrl(resourceEditForm.getResourceUrl());
+            adminResource.setSourceFunction(resourceEditForm.getResourceFun());
+            adminResource.setSourceOrder(Integer.parseInt(resourceEditForm.getResourceOrder()));
+            adminResource.setIconfont(resourceEditForm.getIconfont());
+
+            adminResource.update();
+
+            Ebean.commitTransaction();
+            return AdminResourceEditResult.EDIT_SUCCESS;
+        } catch (Exception ex) {
+            logger.error("更新后台资源出现错误: %s" + ex.getMessage());
+            Ebean.rollbackTransaction();
+            return AdminResourceEditResult.EDIT_FAILED;
         } finally {
             Ebean.endTransaction();
         }
@@ -122,22 +165,22 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
             map.put("name", "顶级资源");
             allParentResources.add(map);
             for (AdminResourcesModel topResource : allResourcesList) {
-                if (null == topResource.sourcePid) {
+                if (null == topResource.getSourcePid()) {
                     Map<String, String> topMap = new HashMap<>();
                     topMap.put("id", topResource.getId().toString());
-                    topMap.put("name", "┝ " + topResource.sourceName);
+                    topMap.put("name", "┝ " + topResource.getSourceName());
                     allParentResources.add(topMap);
                     for (AdminResourcesModel secondResource : allResourcesList) {
-                        if (0 == secondResource.sourceType && null != secondResource.sourcePid && secondResource.sourcePid.getId().equals(topResource.getId())) {
+                        if (0 == secondResource.getSourceType() && null != secondResource.getSourcePid() && secondResource.getSourcePid().getId().equals(topResource.getId())) {
                             Map<String, String> secondMap = new HashMap<>();
                             secondMap.put("id", secondResource.getId().toString());
-                            secondMap.put("name", "&nbsp;&nbsp;┝ " + secondResource.sourceName);
+                            secondMap.put("name", "&nbsp;&nbsp;┝ " + secondResource.getSourceName());
                             allParentResources.add(secondMap);
                             for (AdminResourcesModel threeResource : allResourcesList) {
-                                if (0 == threeResource.sourceType && null != threeResource.sourcePid && threeResource.sourcePid.getId().equals(secondResource.getId())) {
+                                if (0 == threeResource.getSourceType() && null != threeResource.getSourcePid() && threeResource.getSourcePid().getId().equals(secondResource.getId())) {
                                     Map<String, String> threeMap = new HashMap<>();
                                     threeMap.put("id", threeResource.getId().toString());
-                                    threeMap.put("name", "&nbsp;&nbsp;&nbsp;&nbsp;┝ " + threeResource.sourceName);
+                                    threeMap.put("name", "&nbsp;&nbsp;&nbsp;&nbsp;┝ " + threeResource.getSourceName());
                                     allParentResources.add(threeMap);
                                 }
                             }
@@ -159,6 +202,27 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
             Ebean.endTransaction();
         }
 
+    }
+
+    public AdminResourcesModel getAdminResourceById(String id) {
+
+        try {
+            Ebean.beginTransaction();
+
+            AdminResourcesModel adminResources = AdminResourcesModel.find.query().fetchLazy("sourcePid").where(Expr.eq("id", Long.parseLong(id))).findOne();
+
+            Ebean.commitTransaction();
+
+            return adminResources;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error("查询后台资源出现错误: %s" + ex.getMessage());
+            Ebean.rollbackTransaction();
+            return null;
+        } finally {
+            Ebean.endTransaction();
+        }
     }
 
 }

@@ -15,4 +15,11 @@ public interface AuthorityConsts {
         PARENT_IS_NULL
     }
 
+    enum AdminResourceEditResult {
+        EDIT_FAILED,
+        EDIT_SUCCESS,
+        PARENT_IS_NULL,
+        RESOURCE_IS_NULL
+    }
+
 }

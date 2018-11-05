@@ -4,7 +4,7 @@ layui.config({
 }).extend({
     iconPicker: 'module/iconPicker/iconPicker'
 });
-layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
+layui.use(['iconPicker', 'form', 'table', 'jquery', 'admin'], function() {
     var $ = layui.jquery,
         table = layui.table,
         form = layui.form,
@@ -27,6 +27,8 @@ layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
             console.log(data);
         }
     });
+
+    iconPicker.checkIcon('iconPicker', $("#iconPicker").val());
 
     form.verify({
         iconfont: function (value) {
@@ -72,15 +74,14 @@ layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
 
     });
 
-    form.on('submit(add)', function (data) {
+    form.on('submit(edit)', function (data) {
         $.ajax({
-            url:'/authority/AdminResources/add',
+            url:'/authority/AdminResources/edit',
             method:'POST',
             data:data.field,
             success:function(data){
                 if(data.errcode === 0){
                     layer.msg(data.msg, {time: 2000, icon:1});
-                    $("#reset").click();
                 }else{
                     layer.msg(data.msg, {time: 2000, icon:5});
                 }
@@ -90,6 +91,8 @@ layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
                 if(data.detail === 1){
                     if (!isEmptyString(data.msg["resourceAddForm.resourcePid"])){
                         layer.msg(data.msg["resourceAddForm.resourcePid"], {time: 2000, icon:5});
+                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceType"])) {
+                        layer.msg(data.msg["resourceAddForm.resourceType"], {time: 2000, icon:5});
                     } else if (!isEmptyString(data.msg["resourceAddForm.resourceType"])) {
                         layer.msg(data.msg["resourceAddForm.resourceType"], {time: 2000, icon:5});
                     } else if (!isEmptyString(data.msg["resourceAddForm.enable"])) {

@@ -41,9 +41,9 @@ public class LoginService extends BaseService implements MainConsts {
                 return LoginResult.USERNAME_PWD_FAILED;
             }
 
-            if (DigestUtil.sha256Hex(loginForm.getPassword().trim()).equals(admin.password)) {
+            if (DigestUtil.sha256Hex(loginForm.getPassword().trim()).equals(admin.getPassword())) {
                 session.put("adminid",admin.getId());
-                context.login(admin.userName.toLowerCase());
+                context.login(admin.getUserName().toLowerCase());
                 Ebean.commitTransaction();
                 return LoginResult.LOGIN_SUCCESS;
             } else {
@@ -52,7 +52,6 @@ public class LoginService extends BaseService implements MainConsts {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("登录查询失败: %s", ex);
             Ebean.rollbackTransaction();
             return LoginResult.LOGIN_FAILED;

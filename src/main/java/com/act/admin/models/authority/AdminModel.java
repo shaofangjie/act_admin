@@ -22,19 +22,58 @@ public class AdminModel extends BaseModel {
     public static final Finder<Long, AdminModel> find = new Finder<Long, AdminModel>(AdminModel.class);
 
     @Column(name = "user_name", length = 100, unique = true, nullable = false)
-    public String userName;
+    private String userName;
 
     @Column(name = "password", length = 255, unique = false, nullable = false)
-    public String password;
+    private String password;
 
     @Column(name = "nick_name", length = 100, unique = false, nullable = true)
-    public String nickName;
+    private String nickName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    public AdminRoleModel adminRole;
+    private AdminRoleModel adminRole;
 
     @Column(name = "enabled")
-    public boolean enabled ;
+    private boolean enabled ;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public AdminRoleModel getAdminRole() {
+        return adminRole;
+    }
+
+    public void setAdminRole(AdminRoleModel adminRole) {
+        this.adminRole = adminRole;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

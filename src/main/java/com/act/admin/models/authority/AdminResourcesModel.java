@@ -15,32 +15,103 @@ public class AdminResourcesModel extends BaseModel {
 
     @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = AdminResourcesModel.class, fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "source_pid")
-    public AdminResourcesModel sourcePid;
+    private AdminResourcesModel sourcePid;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "admin_role_resources", joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    public List<AdminRoleModel> adminRoles;
+    private List<AdminRoleModel> adminRoles;
 
     @Column(name = "source_type", columnDefinition = "integer default 0")
-    public int sourceType; //资源类型 0:菜单 1:数据 2:功能
+    private int sourceType; //资源类型 0:菜单 1:数据 2:功能
 
     @Column(name = "iconfont", length = 100, unique = false, nullable = false)
-    public String iconfont; //图标
+    private String iconfont; //图标
 
     @Column(name = "source_name", length = 100, unique = false, nullable = false)
-    public String sourceName; //资源名
+    private String sourceName; //资源名
 
     @Column(name = "source_url", length = 255, unique = false, nullable = false)
-    public String sourceUrl; //资源路径
+    private String sourceUrl; //资源路径
 
     @Column(name = "source_function", length = 255, unique = false, nullable = false)
-    public String sourceFunction; //资源方法
+    private String sourceFunction; //资源方法
 
     @Column(name = "enabled")
-    public boolean enabled; //是否启用
+    private boolean enabled; //是否启用
 
     @Column(name = "source_order", columnDefinition = "integer default 0")
-    public int sourceOrder; //排序ID
+    private int sourceOrder; //排序ID
 
+    public AdminResourcesModel getSourcePid() {
+        return sourcePid;
+    }
+
+    public void setSourcePid(AdminResourcesModel sourcePid) {
+        this.sourcePid = sourcePid;
+    }
+
+    public List<AdminRoleModel> getAdminRoles() {
+        return adminRoles;
+    }
+
+    public void setAdminRoles(List<AdminRoleModel> adminRoles) {
+        this.adminRoles = adminRoles;
+    }
+
+    public int getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(int sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getIconfont() {
+        return iconfont;
+    }
+
+    public void setIconfont(String iconfont) {
+        this.iconfont = iconfont;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
+
+    public String getSourceFunction() {
+        return sourceFunction;
+    }
+
+    public void setSourceFunction(String sourceFunction) {
+        this.sourceFunction = sourceFunction;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public int getSourceOrder() {
+        return sourceOrder;
+    }
+
+    public void setSourceOrder(int sourceOrder) {
+        this.sourceOrder = sourceOrder;
+    }
 }

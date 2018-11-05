@@ -37,23 +37,24 @@ layui.use(['form', 'admin', 'jquery'], function () {
                 if(data.errcode === 0){
                     window.location.href='/'
                 }else{
-                    if(data.detail === 1){
-                        if (!isEmptyString(data.msg["loginForm.userName"])){
-                            layer.msg(data.msg["loginForm.userName"], {time: 2000, icon:5});
-                        } else if (!isEmptyString(data.msg["loginForm.password"])) {
-                            layer.msg(data.msg["loginForm.password"], {time: 2000, icon:5});
-                        } else if (!isEmptyString(data.msg["loginForm.captcha"])) {
-                            layer.msg(data.msg["loginForm.captcha"], {time: 2000, icon:5});
-                        }
-
-                    } else {
-                        layer.msg(data.msg, {time: 2000, icon:5});
-                    }
-
+                    layer.msg(data.msg, {time: 2000, icon:5});
                     $(".captcha").click();
                 }
             },
-            error:function (data) {
+            error:function (error) {
+                data = JSON.parse(error.responseText);
+                if(data.detail === 1){
+                    if (!isEmptyString(data.msg["loginForm.userName"])){
+                        layer.msg(data.msg["loginForm.userName"], {time: 2000, icon:5});
+                    } else if (!isEmptyString(data.msg["loginForm.password"])) {
+                        layer.msg(data.msg["loginForm.password"], {time: 2000, icon:5});
+                    } else if (!isEmptyString(data.msg["loginForm.captcha"])) {
+                        layer.msg(data.msg["loginForm.captcha"], {time: 2000, icon:5});
+                    }
+                } else {
+                    layer.msg(data.msg, {time: 2000, icon:5});
+                }
+                $(".captcha").click();
             }
         });
         return false;

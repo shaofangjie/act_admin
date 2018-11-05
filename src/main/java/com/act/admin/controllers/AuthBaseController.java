@@ -52,8 +52,8 @@ public class AuthBaseController extends BaseController {
 
         List<String> adminResourcesFunList = new ArrayList<>();
 
-        for (AdminResourcesModel adminResources : loginAdmin.adminRole.adminRoleResources) {
-            adminResourcesFunList.add(adminResources.sourceFunction);
+        for (AdminResourcesModel adminResources : loginAdmin.getAdminRole().getAdminRoleResources()) {
+            adminResourcesFunList.add(adminResources.getSourceFunction());
         }
 
         context.renderArg("adminResourcesFunList", adminResourcesFunList);
@@ -112,10 +112,10 @@ public class AuthBaseController extends BaseController {
 
     public boolean hasPermission(String actionPath) {
 
-        List<AdminResourcesModel> adminRoleResources = loginAdmin.adminRole.adminRoleResources;
+        List<AdminResourcesModel> adminRoleResources = loginAdmin.getAdminRole().getAdminRoleResources();
 
         for (AdminResourcesModel adminResources : adminRoleResources) {
-            if (actionPath.equals(adminResources.sourceFunction) || actionPath.equals(adminResources.sourceFunction + "Handler")) {
+            if (actionPath.equals(adminResources.getSourceFunction()) || actionPath.equals(adminResources.getSourceFunction() + "Handler")) {
                 return true;
             }
         }

@@ -8,8 +8,7 @@
     <title>后台管理</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="stylesheet" href="/asset/css/font.css">
     <link rel="stylesheet" href="/asset/css/admin.css">
@@ -72,7 +71,7 @@
             %>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">${topMenu.iconfont}</i>
+                    <i class="layui-icon ${topMenu.iconfont}"></i>
                     <cite>${topMenu.name}</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -84,7 +83,7 @@
                 <ul class="sub-menu">
                     <li>
                         <a _href="${secondMenu.url}">
-                            <i class="iconfont">${secondMenu.iconfont}</i>
+                            <i class="layui-icon ${secondMenu.iconfont}"></i>
                             <cite>${secondMenu.name}</cite>
 
                         </a>
@@ -96,7 +95,7 @@
                             <ul class="sub-menu">
                                 <li>
                                     <a _href="${threeMenu.url}">
-                                        <i class="iconfont">${threeMenu.iconfont}</i>
+                                        <i class="layui-icon ${threeMenu.iconfont}"></i>
                                         <cite>${threeMenu.name}</cite>
                                     </a>
                                 </li>

@@ -301,23 +301,21 @@ layui.define(['jquery', 'form', 'layer', 'element'], function (exports) {
         w       弹出层宽度（缺省调默认值）
         h       弹出层高度（缺省调默认值）
     */
+
+
     window.addPage = function (title, url, w, h) {
-        if (title == null || title == '') {
+        if (isEmptyString(title)) {
             title = false;
         }
-        ;
-        if (url == null || url == '') {
+        if (isEmptyString(url)) {
             url = "/404";
         }
-        ;
-        if (w == null || w == '') {
+        if (isEmptyString(w)) {
             w = ($(window).width() * 0.9);
         }
-        ;
-        if (h == null || h == '') {
+        if (isEmptyString(h)) {
             h = ($(window).height() - 50);
         }
-        ;
         layer.open({
             type: 2,
             area: [w + 'px', h + 'px'],
@@ -336,22 +334,18 @@ layui.define(['jquery', 'form', 'layer', 'element'], function (exports) {
     };
     /*弹出层+传递ID参数*/
     window.editPage = function (title, url, id, w, h) {
-        if (title == null || title == '') {
+        if (isEmptyString(title)) {
             title = false;
         }
-        ;
-        if (url == null || url == '') {
-            url = "404.html";
+        if (isEmptyString(url)) {
+            url = "/404";
         }
-        ;
-        if (w == null || w == '') {
+        if (isEmptyString(w)) {
             w = ($(window).width() * 0.9);
         }
-        ;
-        if (h == null || h == '') {
+        if (isEmptyString(h)) {
             h = ($(window).height() - 50);
         }
-        ;
         layer.open({
             type: 2,
             area: [w + 'px', h + 'px'],
@@ -485,15 +479,15 @@ layui.define(['jquery', 'form', 'layer', 'element'], function (exports) {
      *@todo Frame内部的按钮点击打开其他frame的tab
      */
 
-    (function () {
-        $.ajaxSettings.beforeSend = function (xhr) {
-            xhr.setRequestHeader('X-Requested-With', {
-                toString: function () {
-                    return '';
-                }
-            });
-        };
-    })($);
+    // (function () {
+    //     $.ajaxSettings.beforeSend = function (xhr) {
+    //         xhr.setRequestHeader('X-Requested-With', {
+    //             toString: function () {
+    //                 return '';
+    //             }
+    //         });
+    //     };
+    // })($);
 
     exports('admin', {});
 });

@@ -1,14 +1,17 @@
 package com.act.admin.controllers.authority;
 
 import act.app.ActionContext;
+import act.handler.ValidateViolationAdvisor;
 import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
 import com.act.admin.forms.authority.ResourceAddForm;
+import com.act.admin.forms.authority.ResourceEditForm;
 import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.results.authority.AdminResourceResult;
 import com.act.admin.services.authority.AuthorityResourcesService;
+import com.act.admin.validateviolation.LayTableVaildateAdvice;
 import com.alibaba.fastjson.JSONObject;
 import io.ebean.PagedList;
 import org.osgl.logging.L;
@@ -44,12 +47,8 @@ public class AuthorityResourcesController extends AuthBaseController implements 
     }
 
     @ResponseStatus(200)
+    @ValidateViolationAdvisor(LayTableVaildateAdvice.class)
     public Result list(@Valid ResourceSearchForm resourceSearchForm, @Pattern(regexp = RegexpConsts.PAGE, message = "页码格式不合法") String page, @Pattern(regexp = RegexpConsts.LIMIT, message = "分页条数格式不合法") String limit, ActionContext context) {
-
-        if (context.hasViolation()) {
-            String error = getViolationErrStr(context);
-            return renderJson(buildTableResult(1, error, 0, null));
-        }
 
         PagedList<AdminResourcesModel> adminResourcePageList = authorityResourcesService.getAdminResourcePageList(resourceSearchForm, Integer.parseInt(page), Integer.parseInt(limit));
 
@@ -57,11 +56,11 @@ public class AuthorityResourcesController extends AuthBaseController implements 
         for (AdminResourcesModel adminResources : adminResourcePageList.getList()) {
             AdminResourceResult adminResourceResult = new AdminResourceResult();
             adminResourceResult.setId(adminResources.getId());
-            adminResourceResult.setSourceType(adminResources.sourceType);
-            adminResourceResult.setSourceName(adminResources.sourceName);
-            adminResourceResult.setSourceFunction(adminResources.sourceFunction);
-            adminResourceResult.setSourceOrder(adminResources.sourceOrder);
-            adminResourceResult.setEnabled(adminResources.enabled ? 1 : 0);
+            adminResourceResult.setSourceType(adminResources.getSourceType());
+            adminResourceResult.setSourceName(adminResources.getSourceName());
+            adminResourceResult.setSourceFunction(adminResources.getSourceFunction());
+            adminResourceResult.setSourceOrder(adminResources.getSourceOrder());
+            adminResourceResult.setEnabled(adminResources.isEnabled() ? 1 : 0);
             adminResourceResultList.add(adminResourceResult);
         }
 
@@ -78,12 +77,7 @@ public class AuthorityResourcesController extends AuthBaseController implements 
         return render("/authority/adminResourceAdd.html", allParentResources);
     }
 
-    public Result addHandler(@Valid ResourceAddForm resourceAddForm, ActionContext context) {
-
-        if (context.hasViolation()) {
-            JSONObject error = getViolationErrMsg(context);
-            return renderJson(buildErrorResult("", error));
-        }
+    public Result addHandler(@Valid ResourceAddForm resourceAddForm) {
 
         AdminResourceAddResult adminResourceAddResult = authorityResourcesService.adminResourceSave(resourceAddForm);
 
@@ -94,6 +88,37 @@ public class AuthorityResourcesController extends AuthBaseController implements 
                 return renderJson(buildErrorResult("父级资源不存在", null));
             case ADD_FAILED:
                 return renderJson(buildErrorResult("添加失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
+    public Result edit(@Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
+
+        AdminResourcesModel adminResource = authorityResourcesService.getAdminResourceById(id);
+
+        notFoundIfNull(adminResource);
+
+        List<Map<String, String>> allParentResources = authorityResourcesService.getAllParentResources();
+
+        return render("/authority/adminResourceEdit.html", allParentResources, adminResource);
+
+    }
+
+    public Result editHandler(@Valid ResourceEditForm resourceEditForm) {
+
+        AdminResourceEditResult adminResourceEditResult = authorityResourcesService.adminResourceUpdate(resourceEditForm);
+
+        switch (adminResourceEditResult) {
+            case EDIT_SUCCESS:
+                return renderJson(buildSuccessResult("修改成功"));
+            case RESOURCE_IS_NULL:
+                return renderJson(buildErrorResult("资源ID不存在", null));
+            case PARENT_IS_NULL:
+                return renderJson(buildErrorResult("父级资源不存在", null));
+            case EDIT_FAILED:
+                return renderJson(buildErrorResult("修改失败,请重试.", null));
             default:
                 throw new BadRequest();
         }

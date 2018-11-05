@@ -12,7 +12,7 @@ layui.use(['form', 'table', 'jquery', 'admin'], function() {
         sourceName: function (value) {
             var reg = /^[\u4E00-\u9FA5A-Za-z0-9_]{3,17}$/;
             if(!isEmptyString(value) && !reg.test(value)){
-                return "资源名格式非法";
+                return "资源名格式不合法";
             }
         }
     });
@@ -58,6 +58,15 @@ layui.use(['form', 'table', 'jquery', 'admin'], function() {
         var data = obj.data; //获得当前行数据
         var dataId = data.id;
         console.log(layEvent+'-----'+dataId);
+
+        if (layEvent === 'edit') {
+            addPage('修改权限资源','/authority/AdminResources/edit/'+dataId);
+        }
+        if (layEvent === 'del'){
+
+        }
+
+
     });
 
 

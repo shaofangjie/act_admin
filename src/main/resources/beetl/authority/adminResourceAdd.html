@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <title>添加权限资源</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/asset/css/font.css">
     <link rel="stylesheet" href="/asset/css/admin.css">
 </head>
 <body>
 <div class="weadmin-body">
     <!--form表单-->
-    <form class="layui-form layui-form-pane ok-form">
+    <form class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <label class="layui-form-label">父级资源</label>
             <div class="layui-input-block">
@@ -42,7 +41,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">资源图标</label>
             <div class="layui-input-block">
-                <input type="text" name="resourceAddForm.iconfont" placeholder="请输入资源图标" autocomplete="off" class="layui-input" lay-verify="iconfont">
+                <input type="text" name="resourceAddForm.iconfont" placeholder="请输入资源图标" autocomplete="off" id="iconPicker" lay-filter="iconPicker" class="layui-input" lay-verify="iconfont" value="layui-icon-circle-dot">
             </div>
         </div>
         <div class="layui-form-item">
