@@ -22,4 +22,10 @@ public interface AuthorityConsts {
         RESOURCE_IS_NULL
     }
 
+    enum AdminResourceDelResult {
+        DEL_FAILED,
+        DEL_SUCCESS,
+        CANT_DEL
+    }
+
 }

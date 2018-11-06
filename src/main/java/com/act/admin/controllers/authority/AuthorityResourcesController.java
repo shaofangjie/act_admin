@@ -94,7 +94,7 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     }
 
-    public Result edit(@Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
+    public Result edit(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
 
         AdminResourcesModel adminResource = authorityResourcesService.getAdminResourceById(id);
 
@@ -119,6 +119,27 @@ public class AuthorityResourcesController extends AuthBaseController implements 
                 return renderJson(buildErrorResult("父级资源不存在", null));
             case EDIT_FAILED:
                 return renderJson(buildErrorResult("修改失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
+    public Result del(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
+
+        AdminResourcesModel adminResource = authorityResourcesService.getAdminResourceById(id);
+
+        notFoundIfNull(adminResource);
+
+        AdminResourceDelResult adminResourceDelResult = authorityResourcesService.adminResourceDel(adminResource);
+
+        switch (adminResourceDelResult) {
+            case DEL_SUCCESS:
+                return renderJson(buildSuccessResult("删除成功"));
+            case CANT_DEL:
+                return renderJson(buildErrorResult("存在下级资源不允许删除", null));
+            case DEL_FAILED:
+                return renderJson(buildErrorResult("删除失败,请重试.", null));
             default:
                 throw new BadRequest();
         }

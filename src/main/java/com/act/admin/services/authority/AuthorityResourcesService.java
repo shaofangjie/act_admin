@@ -152,6 +152,31 @@ public class AuthorityResourcesService extends BaseService implements AuthorityC
 
     }
 
+    public AdminResourceDelResult adminResourceDel(AdminResourcesModel adminResources) {
+
+        try {
+            Ebean.beginTransaction();
+
+            List<AdminResourcesModel> adminResourcesList = AdminResourcesModel.find.query().where(Expr.eq("sourcePid", adminResources)).findList();
+            if (adminResourcesList.size() != 0) {
+                return AdminResourceDelResult.CANT_DEL;
+            }
+
+            adminResources.delete();
+
+            Ebean.commitTransaction();
+            return AdminResourceDelResult.DEL_SUCCESS;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error("删除后台资源出现错误: %s" + ex.getMessage());
+            Ebean.rollbackTransaction();
+            return AdminResourceDelResult.DEL_FAILED;
+        } finally {
+            Ebean.endTransaction();
+        }
+    }
+
     public List<Map<String, String>> getAllParentResources() {
 
         try {
