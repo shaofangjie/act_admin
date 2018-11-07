@@ -33,10 +33,65 @@ public class AppInitData {
                 adminResources1.setIconfont("layui-icon-group");
                 adminResources1.setSourceName("权限管理");
                 adminResources1.setSourceUrl("/authority/AdminResources/index");
-                adminResources1.setSourceFunction("authority.AuthorityResourcesController.index");
+                adminResources1.setSourceFunction("authority.AdminResourcesController.index");
                 adminResources1.setEnabled(true);
                 adminResources1.setSourceOrder(1);
                 adminResources1.save();
+
+                AdminResourcesModel adminResources7 = new AdminResourcesModel();
+                adminResources7.setSourcePid(adminResources1);
+                adminResources7.setSourceType(0);
+                adminResources7.setIconfont("layui-icon-right");
+                adminResources7.setSourceName("权限角色");
+                adminResources7.setSourceUrl("/authority/AdminRole/index");
+                adminResources7.setSourceFunction("authority.AdminRoleController.index");
+                adminResources7.setEnabled(true);
+                adminResources7.setSourceOrder(1);
+                adminResources7.save();
+
+                AdminResourcesModel adminResources8 = new AdminResourcesModel();
+                adminResources8.setSourcePid(adminResources7);
+                adminResources8.setSourceType(1);
+                adminResources8.setIconfont("layui-icon-right");
+                adminResources8.setSourceName("权限角色列表");
+                adminResources8.setSourceUrl("/authority/AdminRole/list");
+                adminResources8.setSourceFunction("authority.AdminRoleController.list");
+                adminResources8.setEnabled(true);
+                adminResources8.setSourceOrder(1);
+                adminResources8.save();
+
+                AdminResourcesModel adminResources9 = new AdminResourcesModel();
+                adminResources9.setSourcePid(adminResources7);
+                adminResources9.setSourceType(1);
+                adminResources9.setIconfont("layui-icon-right");
+                adminResources9.setSourceName("添加权限角色");
+                adminResources9.setSourceUrl("/authority/AdminRole/add");
+                adminResources9.setSourceFunction("authority.AdminRoleController.add");
+                adminResources9.setEnabled(true);
+                adminResources9.setSourceOrder(1);
+                adminResources9.save();
+
+                AdminResourcesModel adminResources10 = new AdminResourcesModel();
+                adminResources10.setSourcePid(adminResources7);
+                adminResources10.setSourceType(1);
+                adminResources10.setIconfont("layui-icon-right");
+                adminResources10.setSourceName("修改权限角色");
+                adminResources10.setSourceUrl("/authority/AdminRole/edit");
+                adminResources10.setSourceFunction("authority.AdminRoleController.edit");
+                adminResources10.setEnabled(true);
+                adminResources10.setSourceOrder(1);
+                adminResources10.save();
+
+                AdminResourcesModel adminResources11 = new AdminResourcesModel();
+                adminResources11.setSourcePid(adminResources7);
+                adminResources11.setSourceType(1);
+                adminResources11.setIconfont("layui-icon-right");
+                adminResources11.setSourceName("删除权限角色");
+                adminResources11.setSourceUrl("/authority/AdminRole/del");
+                adminResources11.setSourceFunction("authority.AdminRoleController.del");
+                adminResources11.setEnabled(true);
+                adminResources11.setSourceOrder(1);
+                adminResources11.save();
 
                 AdminResourcesModel adminResources2 = new AdminResourcesModel();
                 adminResources2.setSourcePid(adminResources1);
@@ -44,9 +99,9 @@ public class AppInitData {
                 adminResources2.setIconfont("layui-icon-right");
                 adminResources2.setSourceName("权限资源");
                 adminResources2.setSourceUrl("/authority/AdminResources/index");
-                adminResources2.setSourceFunction("authority.AuthorityResourcesController.index");
+                adminResources2.setSourceFunction("authority.AdminResourcesController.index");
                 adminResources2.setEnabled(true);
-                adminResources2.setSourceOrder(1);
+                adminResources2.setSourceOrder(2);
                 adminResources2.save();
 
                 AdminResourcesModel adminResources3 = new AdminResourcesModel();
@@ -55,7 +110,7 @@ public class AppInitData {
                 adminResources3.setIconfont("layui-icon-right");
                 adminResources3.setSourceName("权限资源列表");
                 adminResources3.setSourceUrl("/authority/AdminResources/list");
-                adminResources3.setSourceFunction("authority.AuthorityResourcesController.list");
+                adminResources3.setSourceFunction("authority.AdminResourcesController.list");
                 adminResources3.setEnabled(true);
                 adminResources3.setSourceOrder(2);
                 adminResources3.save();
@@ -66,7 +121,7 @@ public class AppInitData {
                 adminResources4.setIconfont("layui-icon-right");
                 adminResources4.setSourceName("添加权限资源");
                 adminResources4.setSourceUrl("/authority/AdminResources/add");
-                adminResources4.setSourceFunction("authority.AuthorityResourcesController.add");
+                adminResources4.setSourceFunction("authority.AdminResourcesController.add");
                 adminResources4.setEnabled(true);
                 adminResources4.setSourceOrder(3);
                 adminResources4.save();
@@ -77,7 +132,7 @@ public class AppInitData {
                 adminResources5.setIconfont("layui-icon-right");
                 adminResources5.setSourceName("修改权限资源");
                 adminResources5.setSourceUrl("/authority/AdminResources/edit");
-                adminResources5.setSourceFunction("authority.AuthorityResourcesController.edit");
+                adminResources5.setSourceFunction("authority.AdminResourcesController.edit");
                 adminResources5.setEnabled(true);
                 adminResources5.setSourceOrder(4);
                 adminResources5.save();
@@ -88,7 +143,7 @@ public class AppInitData {
                 adminResources6.setIconfont("layui-icon-right");
                 adminResources6.setSourceName("删除权限资源");
                 adminResources6.setSourceUrl("/authority/AdminResources/del");
-                adminResources6.setSourceFunction("authority.AuthorityResourcesController.del");
+                adminResources6.setSourceFunction("authority.AdminResourcesController.del");
                 adminResources6.setEnabled(true);
                 adminResources6.setSourceOrder(5);
                 adminResources6.save();
@@ -103,6 +158,11 @@ public class AppInitData {
                 adminRoleResources.add(adminResources4);
                 adminRoleResources.add(adminResources5);
                 adminRoleResources.add(adminResources6);
+                adminRoleResources.add(adminResources7);
+                adminRoleResources.add(adminResources8);
+                adminRoleResources.add(adminResources9);
+                adminRoleResources.add(adminResources10);
+                adminRoleResources.add(adminResources11);
                 adminRole.setAdminRoleResources(adminRoleResources);
                 adminRole.setLock(true);
                 adminRole.save();

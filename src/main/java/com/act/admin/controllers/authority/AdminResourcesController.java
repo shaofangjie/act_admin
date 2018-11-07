@@ -1,6 +1,5 @@
 package com.act.admin.controllers.authority;
 
-import act.app.ActionContext;
 import act.handler.ValidateViolationAdvisor;
 import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
@@ -10,7 +9,7 @@ import com.act.admin.forms.authority.ResourceEditForm;
 import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.results.authority.AdminResourceResult;
-import com.act.admin.services.authority.AuthorityResourcesService;
+import com.act.admin.services.authority.AdminResourcesService;
 import com.act.admin.validateviolation.LayTableVaildateAdvice;
 import com.alibaba.fastjson.JSONObject;
 import io.ebean.PagedList;
@@ -35,12 +34,12 @@ import java.util.Map;
  * Time: 2:38 AM
  */
 
-public class AuthorityResourcesController extends AuthBaseController implements AuthorityConsts {
+public class AdminResourcesController extends AuthBaseController implements AuthorityConsts {
 
-    private static Logger logger = L.get(AuthorityResourcesController.class);
+    private static Logger logger = L.get(AdminResourcesController.class);
 
     @Inject
-    private AuthorityResourcesService authorityResourcesService;
+    private AdminResourcesService adminResourcesService;
 
     public Result index() {
         return render("/authority/adminResourcesIndex.html");
@@ -48,9 +47,9 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     @ResponseStatus(200)
     @ValidateViolationAdvisor(LayTableVaildateAdvice.class)
-    public Result list(@Valid ResourceSearchForm resourceSearchForm, @Pattern(regexp = RegexpConsts.PAGE, message = "页码格式不合法") String page, @Pattern(regexp = RegexpConsts.LIMIT, message = "分页条数格式不合法") String limit, ActionContext context) {
+    public Result list(@Valid ResourceSearchForm resourceSearchForm, @Pattern(regexp = RegexpConsts.PAGE, message = "页码格式不合法") String page, @Pattern(regexp = RegexpConsts.LIMIT, message = "分页条数格式不合法") String limit) {
 
-        PagedList<AdminResourcesModel> adminResourcePageList = authorityResourcesService.getAdminResourcePageList(resourceSearchForm, Integer.parseInt(page), Integer.parseInt(limit));
+        PagedList<AdminResourcesModel> adminResourcePageList = adminResourcesService.getAdminResourcePageList(resourceSearchForm, Integer.parseInt(page), Integer.parseInt(limit));
 
         List<Object> adminResourceResultList = new ArrayList<>();
         for (AdminResourcesModel adminResources : adminResourcePageList.getList()) {
@@ -72,14 +71,14 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     public Result add() {
 
-        List<Map<String, String>> allParentResources = authorityResourcesService.getAllParentResources();
+        List<Map<String, String>> allParentResources = adminResourcesService.getAllParentResources();
 
         return render("/authority/adminResourceAdd.html", allParentResources);
     }
 
     public Result addHandler(@Valid ResourceAddForm resourceAddForm) {
 
-        AdminResourceAddResult adminResourceAddResult = authorityResourcesService.adminResourceSave(resourceAddForm);
+        AdminResourceAddResult adminResourceAddResult = adminResourcesService.adminResourceSave(resourceAddForm);
 
         switch (adminResourceAddResult) {
             case ADD_SUCCESS:
@@ -96,11 +95,11 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     public Result edit(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
 
-        AdminResourcesModel adminResource = authorityResourcesService.getAdminResourceById(id);
+        AdminResourcesModel adminResource = adminResourcesService.getAdminResourceById(id);
 
         notFoundIfNull(adminResource);
 
-        List<Map<String, String>> allParentResources = authorityResourcesService.getAllParentResources();
+        List<Map<String, String>> allParentResources = adminResourcesService.getAllParentResources();
 
         return render("/authority/adminResourceEdit.html", allParentResources, adminResource);
 
@@ -108,7 +107,7 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     public Result editHandler(@Valid ResourceEditForm resourceEditForm) {
 
-        AdminResourceEditResult adminResourceEditResult = authorityResourcesService.adminResourceUpdate(resourceEditForm);
+        AdminResourceEditResult adminResourceEditResult = adminResourcesService.adminResourceUpdate(resourceEditForm);
 
         switch (adminResourceEditResult) {
             case EDIT_SUCCESS:
@@ -127,11 +126,11 @@ public class AuthorityResourcesController extends AuthBaseController implements 
 
     public Result del(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
 
-        AdminResourcesModel adminResource = authorityResourcesService.getAdminResourceById(id);
+        AdminResourcesModel adminResource = adminResourcesService.getAdminResourceById(id);
 
         notFoundIfNull(adminResource);
 
-        AdminResourceDelResult adminResourceDelResult = authorityResourcesService.adminResourceDel(adminResource);
+        AdminResourceDelResult adminResourceDelResult = adminResourcesService.adminResourceDel(adminResource);
 
         switch (adminResourceDelResult) {
             case DEL_SUCCESS:

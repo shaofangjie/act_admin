@@ -26,9 +26,9 @@ import java.util.Map;
  * Date: 2018-10-31
  * Time: 10:09 PM
  */
-public class AuthorityResourcesService extends BaseService implements AuthorityConsts {
+public class AdminResourcesService extends BaseService implements AuthorityConsts {
 
-    private static Logger logger = L.get(AuthorityResourcesService.class);
+    private static Logger logger = L.get(AdminResourcesService.class);
 
     public PagedList<AdminResourcesModel> getAdminResourcePageList(final ResourceSearchForm resourceSearchForm, final int page, final int limit) {
 
