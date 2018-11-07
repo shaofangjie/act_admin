@@ -3,6 +3,7 @@ package com.act.admin.controllers;
 import act.app.ActionContext;
 import act.controller.Controller;
 import com.act.admin.annotation.IgnorePermissionCheck;
+import com.act.admin.annotation.SpecifiedPermission;
 import com.act.admin.models.authority.AdminModel;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.services.BaseService;
@@ -77,27 +78,31 @@ public class AuthBaseController extends BaseController {
 
     private boolean checkPermission(ActionContext context) {
         String actionPath = context.actionPath().trim();
+        String checkActionPath = actionPath.replace("com.act.admin.controllers.", "");
         logger.debug(actionPath);
         boolean ignorePermissionCheck = false;
         try {
             String classsName = actionPath.substring(0, actionPath.lastIndexOf("."));
             String methodName = actionPath.substring(actionPath.lastIndexOf(".") + 1, actionPath.length());
             Method[] methods = Class.forName(classsName).getMethods();
-            //判断指定方法是否有IgnorePermissionCheck注解
+            //判断指定方法是否有 IgnorePermissionCheck SpecifiedPermission 注解
             for (Method method :methods) {
-                if (methodName.equals(method.getName()) && null != method.getAnnotation(IgnorePermissionCheck.class)) {
+                IgnorePermissionCheck ignorePermissionCheckAnnotation = method.getAnnotation(IgnorePermissionCheck.class);
+                SpecifiedPermission specifiedPermissionAnnotation = method.getAnnotation(SpecifiedPermission.class);
+                if (methodName.equals(method.getName()) && null != ignorePermissionCheckAnnotation) {
                     ignorePermissionCheck = true;
                     break;
                 }
+                if (methodName.equals(method.getName()) && null != specifiedPermissionAnnotation) {
+                    checkActionPath = specifiedPermissionAnnotation.value();
+                    break;
+                }
             }
-            //下面的判断方式简单，但是有坑。有参数的方法判断有问题
-            //ignorePermissionCheck = Class.forName(classsName).getMethod(methodName).isAnnotationPresent(IgnorePermissionCheck.class);
 
             if (ignorePermissionCheck) {
                 return true;
             } else {
-                actionPath = actionPath.replace("com.act.admin.controllers.", "");
-                if (hasPermission(actionPath)) {
+                if (hasPermission(checkActionPath)) {
                     return true;
                 } else {
                     throw forbidden();
@@ -110,12 +115,12 @@ public class AuthBaseController extends BaseController {
         }
     }
 
-    public boolean hasPermission(String actionPath) {
+    private boolean hasPermission(String actionPath) {
 
         List<AdminResourcesModel> adminRoleResources = loginAdmin.getAdminRole().getAdminRoleResources();
 
         for (AdminResourcesModel adminResources : adminRoleResources) {
-            if (actionPath.equals(adminResources.getSourceFunction()) || actionPath.equals(adminResources.getSourceFunction() + "Handler")) {
+            if (actionPath.equals(adminResources.getSourceFunction())) {
                 return true;
             }
         }

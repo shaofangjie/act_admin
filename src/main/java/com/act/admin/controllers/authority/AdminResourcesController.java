@@ -1,6 +1,7 @@
 package com.act.admin.controllers.authority;
 
 import act.handler.ValidateViolationAdvisor;
+import com.act.admin.annotation.SpecifiedPermission;
 import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
@@ -76,6 +77,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
         return render("/authority/adminResourceAdd.html", allParentResources);
     }
 
+    @SpecifiedPermission(value = "authority.AdminResourcesController.add")
     public Result addHandler(@Valid ResourceAddForm resourceAddForm) {
 
         AdminResourceAddResult adminResourceAddResult = adminResourcesService.adminResourceSave(resourceAddForm);
