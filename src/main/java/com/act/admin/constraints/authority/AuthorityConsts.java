@@ -28,4 +28,10 @@ public interface AuthorityConsts {
         CANT_DEL
     }
 
+    enum AdminRoleAddResult {
+        ADD_FAILED,
+        ADD_SUCCESS,
+        RESOURCE_IS_NULL
+    }
+
 }

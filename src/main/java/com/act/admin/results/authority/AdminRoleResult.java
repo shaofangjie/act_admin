@@ -11,6 +11,7 @@ public class AdminRoleResult {
 
     private Long id;
     private String roleName;
+    private int adminNum;
     private int lock;
 
     public Long getId() {
@@ -19,6 +20,14 @@ public class AdminRoleResult {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAdminNum() {
+        return adminNum;
+    }
+
+    public void setAdminNum(int adminNum) {
+        this.adminNum = adminNum;
     }
 
     public String getRoleName() {

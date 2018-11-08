@@ -2,11 +2,10 @@ layui.config({
     base: '/asset/js/'
     , version: 'v1'
 }).extend({
-    iconPicker: 'module/iconPicker/iconPicker'
+    iconPicker: 'module/iconPicker'
 });
-layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
+layui.use(['form', 'jquery', 'admin', 'iconPicker'], function () {
     var $ = layui.jquery,
-        table = layui.table,
         form = layui.form,
         iconPicker = layui.iconPicker,
         admin = layui.admin;
@@ -24,7 +23,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
         limit: 12,
         // 点击回调
         click: function (data) {
-            console.log(data);
+            // console.log(data);
         }
     });
 
@@ -74,40 +73,32 @@ layui.use(['form', 'table', 'jquery', 'admin', 'iconPicker'], function() {
 
     form.on('submit(add)', function (data) {
         $.ajax({
-            url:'/authority/AdminResources/add',
-            method:'POST',
-            data:data.field,
-            success:function(data){
-                if(data.errcode === 0){
-                    layer.msg(data.msg, {time: 2000, icon:1});
+            url: '/authority/AdminResources/add',
+            method: 'POST',
+            data: data.field,
+            success: function (data) {
+                if (data.errcode === 0) {
+                    layer.msg(data.msg, {time: 2000, icon: 1});
                     $("#reset").click();
-                }else{
-                    layer.msg(data.msg, {time: 2000, icon:5});
+                } else {
+                    layer.msg(data.msg, {time: 2000, icon: 5});
                 }
             },
-            error:function (error) {
+            error: function (error) {
                 data = JSON.parse(error.responseText);
-                if(data.detail === 1){
-                    if (!isEmptyString(data.msg["resourceAddForm.resourcePid"])){
-                        layer.msg(data.msg["resourceAddForm.resourcePid"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceType"])) {
-                        layer.msg(data.msg["resourceAddForm.resourceType"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.enable"])) {
-                        layer.msg(data.msg["resourceAddForm.enable"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.iconfont"])) {
-                        layer.msg(data.msg["resourceAddForm.iconfont"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceName"])) {
-                        layer.msg(data.msg["resourceAddForm.resourceName"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceUrl"])) {
-                        layer.msg(data.msg["resourceAddForm.resourceUrl"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceFun"])) {
-                        layer.msg(data.msg["resourceAddForm.resourceFun"], {time: 2000, icon:5});
-                    } else if (!isEmptyString(data.msg["resourceAddForm.resourceOrder"])) {
-                        layer.msg(data.msg["resourceAddForm.resourceOrder"], {time: 2000, icon:5});
+                if (data.detail === 1) {
+                    var errmsgs = data.msg;
+                    var errstr = '';
+                    for (var i in errmsgs) {
+                        errstr += errmsgs[i] + '<br />';
                     }
-
+                    layer.alert(errstr, {icon: 5});
                 } else {
-                    layer.msg(data.msg, {time: 2000, icon:5});
+                    if (!isEmptyString(data.msg)) {
+                        layer.msg(data.msg, {time: 2000, icon: 5});
+                    } else {
+                        layer.msg("操作失败", {time: 2000, icon: 5});
+                    }
                 }
             }
         });

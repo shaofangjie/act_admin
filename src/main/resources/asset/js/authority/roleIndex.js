@@ -37,7 +37,8 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
         page: true, //开启分页
         cols: [[
             {field: 'id', title: 'ID', width: '10%'},
-            {field: 'roleName', title: '资源名称', width: '80%'},
+            {field: 'roleName', title: '资源名称', width: '75%'},
+            {field: 'adminNum', title: '用户数', width: '5%'},
             {title: '操作', width: '10%', templet: '#operation'}
         ]],
         url: '/authority/AdminRole/list',
@@ -79,7 +80,20 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
                         },
                         error:function (error) {
                             data = JSON.parse(error.responseText);
-                            layer.msg(data.msg, {time: 2000, icon:5});
+                            if(data.detail === 1){
+                                var errmsgs = data.msg;
+                                var errstr = '';
+                                for (var i in errmsgs) {
+                                    errstr += errmsgs[i] + '<br />';
+                                }
+                                layer.alert(errstr, {icon: 5});
+                            } else {
+                                if (!isEmptyString(data.msg))  {
+                                    layer.msg(data.msg, {time: 2000, icon:5});
+                                } else {
+                                    layer.msg("操作失败", {time: 2000, icon:5});
+                                }
+                            }
                         }
                     });
                 }

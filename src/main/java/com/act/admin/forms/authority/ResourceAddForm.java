@@ -27,7 +27,7 @@ public class ResourceAddForm {
     @NotNull(message = "资源图标不能为空")
     @Pattern(regexp = RegexpConsts.ICONFONT, message = "资源图标不合法")
     private String iconfont;
-    @NotNull(message = "资源名格不能为空")
+    @NotNull(message = "资源名不能为空")
     @Pattern(regexp = RegexpConsts.SOURCENAME, message = "资源名格式不合法")
     private String resourceName;
     @NotNull(message = "资源路由不能为空")

@@ -1,9 +1,11 @@
 package com.act.admin.controllers.authority;
 
 import act.handler.ValidateViolationAdvisor;
+import com.act.admin.annotation.SpecifiedPermission;
 import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
+import com.act.admin.forms.authority.RoleAddForm;
 import com.act.admin.forms.authority.RoleSearchForm;
 import com.act.admin.models.authority.AdminRoleModel;
 import com.act.admin.results.authority.AdminRoleResult;
@@ -14,6 +16,7 @@ import io.ebean.PagedList;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
 import org.osgl.mvc.annotation.ResponseStatus;
+import org.osgl.mvc.result.BadRequest;
 import org.osgl.mvc.result.Result;
 
 import javax.inject.Inject;
@@ -52,6 +55,7 @@ public class AdminRoleController extends AuthBaseController implements Authority
             AdminRoleResult adminRoleResult = new AdminRoleResult();
             adminRoleResult.setId(adminRole.getId());
             adminRoleResult.setRoleName(adminRole.getRoleName());
+            adminRoleResult.setAdminNum(adminRole.getAdmin().size());
             adminRoleResult.setLock(adminRole.isLock() ? 1 : 0);
             adminRoleResultList.add(adminRoleResult);
         }
@@ -61,5 +65,41 @@ public class AdminRoleController extends AuthBaseController implements Authority
         return renderJson(adminResourceJson);
 
     }
+
+    @SpecifiedPermission(value = "authority.AdminRoleController.add")
+    public Result resourceTree() {
+
+        JSONObject resourceTreeJson = adminRoleService.getResourceTreeJson();
+
+        return renderJson(resourceTreeJson);
+    }
+
+    public Result add() {
+
+        return render("/authority/adminRoleAdd.html");
+
+    }
+
+    @SpecifiedPermission(value = "authority.AdminRoleController.add")
+    public Result addHandler(@Valid RoleAddForm roleAddForm) {
+
+        badRequestIfNull(roleAddForm);
+
+        AdminRoleAddResult adminRoleAddResult = adminRoleService.adminRoleSave(roleAddForm);
+
+        switch (adminRoleAddResult) {
+            case ADD_SUCCESS:
+                return renderJson(buildSuccessResult("添加成功"));
+            case RESOURCE_IS_NULL:
+                return renderJson(buildErrorResult("角色权限不能为空", null));
+            case ADD_FAILED:
+                return renderJson(buildErrorResult("添加失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
+
 
 }

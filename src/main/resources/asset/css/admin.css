@@ -642,4 +642,9 @@ table td {
 .weadmin-notice .layui-carousel-ind ul li.layui-this {
   background-color: #999;
 }
+.tree-border {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e6e6e6;
+}
 /*# sourceMappingURL=admin.css.map */

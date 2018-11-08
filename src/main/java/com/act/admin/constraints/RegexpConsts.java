@@ -23,4 +23,5 @@ public final class RegexpConsts {
     public static final String ROUTER = "^[A-Za-z0-9/._-]+$"; //路由
     public static final String FUNNAME = ROUTER;
     public static final String ICONFONT = "^[A-Za-z0-9-]+$"; //icon
+    public static final String ROLERESOURCE = "^(\\d+,)*\\d+$"; //1,2,3,4
 }

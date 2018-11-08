@@ -80,6 +80,8 @@ public class AdminResourcesController extends AuthBaseController implements Auth
     @SpecifiedPermission(value = "authority.AdminResourcesController.add")
     public Result addHandler(@Valid ResourceAddForm resourceAddForm) {
 
+        badRequestIfNull(resourceAddForm);
+
         AdminResourceAddResult adminResourceAddResult = adminResourcesService.adminResourceSave(resourceAddForm);
 
         switch (adminResourceAddResult) {
@@ -107,7 +109,10 @@ public class AdminResourcesController extends AuthBaseController implements Auth
 
     }
 
+    @SpecifiedPermission(value = "authority.AdminResourcesController.edit")
     public Result editHandler(@Valid ResourceEditForm resourceEditForm) {
+
+        badRequestIfNull(resourceEditForm);
 
         AdminResourceEditResult adminResourceEditResult = adminResourcesService.adminResourceUpdate(resourceEditForm);
 

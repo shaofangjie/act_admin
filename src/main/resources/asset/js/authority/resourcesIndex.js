@@ -83,7 +83,20 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
                         },
                         error:function (error) {
                             data = JSON.parse(error.responseText);
-                            layer.msg(data.msg, {time: 2000, icon:5});
+                            if(data.detail === 1){
+                                var errmsgs = data.msg;
+                                var errstr = '';
+                                for (var i in errmsgs) {
+                                    errstr += errmsgs[i] + '<br />';
+                                }
+                                layer.alert(errstr, {icon: 5});
+                            } else {
+                                if (!isEmptyString(data.msg))  {
+                                    layer.msg(data.msg, {time: 2000, icon:5});
+                                } else {
+                                    layer.msg("操作失败", {time: 2000, icon:5});
+                                }
+                            }
                         }
                     });
                 }

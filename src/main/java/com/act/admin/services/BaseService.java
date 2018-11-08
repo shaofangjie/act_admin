@@ -21,6 +21,12 @@ import java.util.List;
 
 public class BaseService {
 
+    public List<AdminResourcesModel> getAllResourcesList() {
+
+        return AdminResourcesModel.find.query().fetchLazy("sourcePid").findList();
+
+    }
+
     public boolean captchaVerify(H.Session session, String captcha) {
         if (Act.isDev()) {
             return true;

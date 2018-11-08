@@ -182,7 +182,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
         try {
             Ebean.beginTransaction();
 
-            List<AdminResourcesModel> allResourcesList = AdminResourcesModel.find.query().fetchLazy("sourcePid").findList();
+            List<AdminResourcesModel> allResourcesList = getAllResourcesList();
 
             List<Map<String, String>> allParentResources = new ArrayList<>();
             Map<String, String> map = new HashMap<>();
