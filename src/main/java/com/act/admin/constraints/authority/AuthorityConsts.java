@@ -34,4 +34,12 @@ public interface AuthorityConsts {
         RESOURCE_IS_NULL
     }
 
+    enum AdminRoleEditResult {
+        EDIT_FAILED,
+        EDIT_SUCCESS,
+        ROLE_NOT_EXIST,
+        CANT_EDIT,
+        RESOURCE_IS_NULL
+    }
+
 }

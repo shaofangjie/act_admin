@@ -6,6 +6,7 @@ import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
 import com.act.admin.forms.authority.RoleAddForm;
+import com.act.admin.forms.authority.RoleEditForm;
 import com.act.admin.forms.authority.RoleSearchForm;
 import com.act.admin.models.authority.AdminRoleModel;
 import com.act.admin.results.authority.AdminRoleResult;
@@ -69,7 +70,7 @@ public class AdminRoleController extends AuthBaseController implements Authority
     @SpecifiedPermission(value = "authority.AdminRoleController.add")
     public Result resourceTree() {
 
-        JSONObject resourceTreeJson = adminRoleService.getResourceTreeJson();
+        JSONObject resourceTreeJson = adminRoleService.getResourceTreeJson(null);
 
         return renderJson(resourceTreeJson);
     }
@@ -100,6 +101,50 @@ public class AdminRoleController extends AuthBaseController implements Authority
 
     }
 
+    @SpecifiedPermission(value = "authority.AdminRoleController.edit")
+    public Result roleResourceEditTree(@Valid @Pattern(regexp = RegexpConsts.ID, message = "角色ID格式不合法") String roleId) {
 
+        AdminRoleModel adminRole = adminRoleService.getAdminRoleById(roleId);
+
+        notFoundIfNull(adminRole);
+
+        JSONObject resourceTreeJson = adminRoleService.getResourceTreeJson(adminRole);
+
+        return renderJson(resourceTreeJson);
+    }
+
+    public Result edit(@Valid @Pattern(regexp = RegexpConsts.ID, message = "角色ID格式不合法") String roleId) {
+
+        AdminRoleModel adminRole = adminRoleService.getAdminRoleById(roleId);
+
+        notFoundIfNull(adminRole);
+
+        return render("/authority/adminRoleEdit.html", adminRole);
+
+    }
+
+    @SpecifiedPermission(value = "authority.AdminRoleController.edit")
+    public Result editHandler(@Valid RoleEditForm roleEditForm) {
+
+        badRequestIfNull(roleEditForm);
+
+        AdminRoleEditResult adminRoleEditResult = adminRoleService.adminRoleUpdate(roleEditForm);
+
+        switch (adminRoleEditResult) {
+            case EDIT_SUCCESS:
+                return renderJson(buildSuccessResult("修改成功"));
+            case RESOURCE_IS_NULL:
+                return renderJson(buildErrorResult("角色权限不能为空", null));
+            case ROLE_NOT_EXIST:
+                return renderJson(buildErrorResult("角色不存在", null));
+            case CANT_EDIT:
+                return renderJson(buildErrorResult("角色不可编辑", null));
+            case EDIT_FAILED:
+                return renderJson(buildErrorResult("修改失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
 
 }

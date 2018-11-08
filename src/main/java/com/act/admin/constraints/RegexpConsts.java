@@ -18,7 +18,7 @@ public final class RegexpConsts {
     public static final String ORDERDIR = ORDERCOLUMN;
     public static final String PAGE = "^[1-9]\\d*$"; //正整数
     public static final String LIMIT = PAGE;
-    public static final String SOURCEID = PAGE;
+    public static final String ID = PAGE;
     public static final String NUM = "^[0-9]*$"; //数字
     public static final String ROUTER = "^[A-Za-z0-9/._-]+$"; //路由
     public static final String FUNNAME = ROUTER;

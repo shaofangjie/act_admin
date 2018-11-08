@@ -97,7 +97,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
 
     }
 
-    public Result edit(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
+    public Result edit(@Valid @Pattern(regexp = RegexpConsts.ID, message = "资源ID格式不合法") String id) {
 
         AdminResourcesModel adminResource = adminResourcesService.getAdminResourceById(id);
 
@@ -131,7 +131,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
 
     }
 
-    public Result del(@Valid @Pattern(regexp = RegexpConsts.SOURCEID, message = "资源ID格式不合法") String id) {
+    public Result del(@Valid @Pattern(regexp = RegexpConsts.ID, message = "资源ID格式不合法") String id) {
 
         AdminResourcesModel adminResource = adminResourcesService.getAdminResourceById(id);
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改权限角色</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/asset/css/admin.css">
+</head>
+<body>
+<div class="weadmin-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <input type="hidden" id="roleId" name="roleEditForm.roleId" value="${@adminRole.getId()}" >
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleEditForm.roleName" placeholder="请输入角色名称" autocomplete="off" class="layui-input" lay-verify="roleName" value="${@adminRole.getRoleName()}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色权限</label>
+            <div class="layui-input-block">
+                <div class="tree-border" id="authTree"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="edit">提交修改</button>
+                <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/asset/lib/layui/layui.js"></script>
+<script src="/asset/js/authority/roleEdit.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
