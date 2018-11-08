@@ -57,6 +57,8 @@ public class AdminRoleController extends AuthBaseController implements Authority
             adminRoleResult.setId(adminRole.getId());
             adminRoleResult.setRoleName(adminRole.getRoleName());
             adminRoleResult.setAdminNum(adminRole.getAdmin().size());
+            adminRoleResult.setWhenUpdated(adminRole.getWhenUpdated());
+            adminRoleResult.setWhenCreated(adminRole.getWhenCreated());
             adminRoleResult.setLock(adminRole.isLock() ? 1 : 0);
             adminRoleResultList.add(adminRoleResult);
         }

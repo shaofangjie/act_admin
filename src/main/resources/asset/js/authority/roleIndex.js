@@ -37,9 +37,11 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
         page: true, //开启分页
         cols: [[
             {field: 'id', title: 'ID', width: '10%'},
-            {field: 'roleName', title: '资源名称', width: '75%'},
-            {field: 'adminNum', title: '用户数', width: '5%'},
-            {title: '操作', width: '10%', templet: '#operation'}
+            {field: 'roleName', title: '资源名称', width: '35%'},
+            {field: 'adminNum', title: '用户数', width: '10%'},
+            {field: 'whenUpdated', title: '修改时间', width: '15%'},
+            {field: 'whenCreated', title: '创建时间', width: '15%'},
+            {title: '操作', width: '15%', templet: '#operation'}
         ]],
         url: '/authority/AdminRole/list',
         where: queryParams()

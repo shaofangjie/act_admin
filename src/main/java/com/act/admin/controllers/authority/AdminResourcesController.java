@@ -65,8 +65,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
         }
 
         JSONObject adminResourceJson = buildTableResult(0, "", adminResourcePageList.getTotalCount(), adminResourceResultList);
-
-
+        
         return renderJson(adminResourceJson);
     }
 

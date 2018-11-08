@@ -1,5 +1,9 @@
 package com.act.admin.results.authority;
 
+import cn.hutool.core.date.DateUtil;
+
+import java.sql.Timestamp;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -13,6 +17,8 @@ public class AdminRoleResult {
     private String roleName;
     private int adminNum;
     private int lock;
+    private String whenUpdated;
+    private String whenCreated;
 
     public Long getId() {
         return id;
@@ -44,5 +50,21 @@ public class AdminRoleResult {
 
     public void setLock(int lock) {
         this.lock = lock;
+    }
+
+    public String getWhenUpdated() {
+        return whenUpdated;
+    }
+
+    public void setWhenUpdated(Timestamp whenUpdated) {
+        this.whenUpdated = DateUtil.formatDateTime(whenUpdated);
+    }
+
+    public String getWhenCreated() {
+        return whenCreated;
+    }
+
+    public void setWhenCreated(Timestamp whenCreated) {
+        this.whenCreated = DateUtil.formatDateTime(whenCreated);
     }
 }
