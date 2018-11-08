@@ -61,7 +61,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
         }
         if (layEvent === 'del') {
             layer.open({
-                content: '您确定要删除 ' + data.sourceName + ' 吗?',
+                content: '您确定要删除 ' + data.roleName + ' 吗?',
                 icon: 3,
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
@@ -71,7 +71,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
                         success:function(data){
                             if(data.errcode === 0){
                                 layer.msg(data.msg, {time: 2000, icon:1});
-                                resourceTable.reload({
+                                roleTable.reload({
                                     where: queryParams()
                                 });
                             }else{

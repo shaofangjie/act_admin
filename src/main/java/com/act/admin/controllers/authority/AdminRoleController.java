@@ -147,4 +147,25 @@ public class AdminRoleController extends AuthBaseController implements Authority
 
     }
 
+    public Result del(@Valid @Pattern(regexp = RegexpConsts.ID, message = "角色ID格式不合法") String roleId) {
+
+        AdminRoleModel adminRole = adminRoleService.getAdminRoleById(roleId);
+
+        notFoundIfNull(adminRole);
+
+        AdminRoleDelResult adminRoleDelResult = adminRoleService.adminRoleDel(adminRole);
+
+        switch (adminRoleDelResult) {
+            case DEL_SUCCESS:
+                return renderJson(buildSuccessResult("删除成功"));
+            case CANT_DEL:
+                return renderJson(buildErrorResult("角色使用中,不允许删除.", null));
+            case DEL_FAILED:
+                return renderJson(buildErrorResult("删除失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
 }

@@ -82,6 +82,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             } else {
                 parentResource = AdminResourcesModel.find.byId(Long.parseLong(resourceAddForm.getResourcePid()));
                 if (null == parentResource) {
+                    Ebean.commitTransaction();
                     return AdminResourceAddResult.PARENT_IS_NULL;
                 }
             }
@@ -117,6 +118,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             AdminResourcesModel parentResource = null;
 
             if (null == adminResource) {
+                Ebean.commitTransaction();
                 return AdminResourceEditResult.RESOURCE_IS_NULL;
             }
 
@@ -125,6 +127,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             } else {
                 parentResource = AdminResourcesModel.find.byId(Long.parseLong(resourceEditForm.getResourcePid()));
                 if (null == parentResource) {
+                    Ebean.commitTransaction();
                     return AdminResourceEditResult.PARENT_IS_NULL;
                 }
             }
@@ -159,6 +162,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
             List<AdminResourcesModel> adminResourcesList = AdminResourcesModel.find.query().where(Expr.eq("sourcePid", adminResources)).findList();
             if (adminResourcesList.size() != 0) {
+                Ebean.commitTransaction();
                 return AdminResourceDelResult.CANT_DEL;
             }
 

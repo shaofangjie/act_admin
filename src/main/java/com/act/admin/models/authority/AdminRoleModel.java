@@ -26,7 +26,7 @@ public class AdminRoleModel extends BaseModel {
     @OneToMany(mappedBy = "adminRole", fetch = FetchType.LAZY)
     private List<AdminModel> admin;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "adminRoles")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "adminRoles", cascade = CascadeType.REMOVE)
     private List<AdminResourcesModel> adminRoleResources;
 
     @Column(name = "is_lock")

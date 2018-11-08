@@ -202,10 +202,12 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             AdminRoleModel adminRole = getAdminRoleById(roleEditForm.getRoleId());
 
             if (null == adminRole) {
+                Ebean.commitTransaction();
                 return AdminRoleEditResult.ROLE_NOT_EXIST;
             }
 
             if (adminRole.isLock()) {
+                Ebean.commitTransaction();
                 return AdminRoleEditResult.CANT_EDIT;
             }
 
@@ -216,6 +218,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             }
 
             if (resourceIds.length == 0) {
+                Ebean.commitTransaction();
                 return AdminRoleEditResult.RESOURCE_IS_NULL;
             }
 
@@ -238,12 +241,41 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
 
     }
 
+    public AdminRoleDelResult adminRoleDel(AdminRoleModel adminRole) {
+
+        try {
+            Ebean.beginTransaction();
+
+            if (adminRole.getAdmin().size() != 0) {
+                Ebean.commitTransaction();
+                return AdminRoleDelResult.CANT_DEL;
+            }
+
+            adminRole.delete();
+
+            Ebean.commitTransaction();
+            return AdminRoleDelResult.DEL_SUCCESS;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error("删除权限角色出现错误: %s" + ex.getMessage());
+            Ebean.rollbackTransaction();
+            return AdminRoleDelResult.DEL_FAILED;
+        } finally {
+            Ebean.endTransaction();
+        }
+    }
+
     public AdminRoleModel getAdminRoleById(String roleId) {
 
         try {
             Ebean.beginTransaction();
 
-            AdminRoleModel adminRole = AdminRoleModel.find.query().fetchLazy("adminRoleResources").where(Expr.eq("id", Long.parseLong(roleId))).findOne();
+            AdminRoleModel adminRole = AdminRoleModel.find.query()
+                    .fetchLazy("admin")
+                    .fetchLazy("adminRoleResources")
+                    .where(Expr.eq("id", Long.parseLong(roleId)))
+                    .findOne();
 
             Ebean.commitTransaction();
 
