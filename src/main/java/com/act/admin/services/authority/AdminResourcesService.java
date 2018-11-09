@@ -70,7 +70,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
     }
 
-    public AdminResourceAddResult adminResourceSave(ResourceAddForm resourceAddForm) {
+    public AdminResourceAddResult adminResourceSave(final ResourceAddForm resourceAddForm) {
         try {
             Ebean.beginTransaction();
 
@@ -109,7 +109,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
     }
 
-    public AdminResourceEditResult adminResourceUpdate(ResourceEditForm resourceEditForm) {
+    public AdminResourceEditResult adminResourceUpdate(final ResourceEditForm resourceEditForm) {
         try {
             Ebean.beginTransaction();
 
@@ -155,7 +155,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
     }
 
-    public AdminResourceDelResult adminResourceDel(AdminResourcesModel adminResources) {
+    public AdminResourceDelResult adminResourceDel(final AdminResourcesModel adminResources) {
 
         try {
             Ebean.beginTransaction();

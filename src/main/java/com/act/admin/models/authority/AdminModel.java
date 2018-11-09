@@ -35,7 +35,10 @@ public class AdminModel extends BaseModel {
     private AdminRoleModel adminRole;
 
     @Column(name = "enabled")
-    private boolean enabled ;
+    private boolean enabled;
+
+    @Column(name = "is_lock")
+    private boolean Lock; //是否锁定不允许修改
 
     public String getUserName() {
         return userName;
@@ -75,5 +78,13 @@ public class AdminModel extends BaseModel {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isLock() {
+        return Lock;
+    }
+
+    public void setLock(boolean lock) {
+        Lock = lock;
     }
 }

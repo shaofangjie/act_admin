@@ -42,6 +42,12 @@ public class LoginService extends BaseService implements MainConsts {
             }
 
             if (DigestUtil.sha256Hex(loginForm.getPassword().trim()).equals(admin.getPassword())) {
+
+                if (!admin.isEnabled()) {
+                    Ebean.commitTransaction();
+                    return LoginResult.USER_DISABLE;
+                }
+
                 session.put("adminid",admin.getId());
                 context.login(admin.getUserName().toLowerCase());
                 Ebean.commitTransaction();

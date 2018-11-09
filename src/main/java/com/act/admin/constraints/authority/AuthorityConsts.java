@@ -48,4 +48,11 @@ public interface AuthorityConsts {
         CANT_DEL
     }
 
+    enum AdminAddResult {
+        ADD_FAILED,
+        ADD_SUCCESS,
+        USER_EXIST,
+        ROLE_NOT_EXIST
+    }
+
 }

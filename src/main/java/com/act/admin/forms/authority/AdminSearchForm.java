@@ -12,21 +12,41 @@ import com.act.admin.constraints.RegexpConsts;
  * Time: 10:09 PM
  */
 
-public class ResourceSearchForm {
+public class AdminSearchForm {
 
-    @EmptyOrPattern(regexp = RegexpConsts.SEARCH, message = "资源名格式不合法")
-    private String resourceName;
+    @EmptyOrPattern(regexp = RegexpConsts.SEARCH, message = "用户名格式不合法")
+    private String userName;
+    @EmptyOrPattern(regexp = RegexpConsts.SEARCH, message = "昵称格式不合法")
+    private String nickName;
+    @EmptyOrPattern(regexp = RegexpConsts.ID, message = "角色ID格式不合法")
+    private String roleId;
     @EmptyOrPattern(regexp = RegexpConsts.ORDERCOLUMN, message = "排序字段不合法")
     private String orderColumn;
     @EmptyOrPattern(regexp = RegexpConsts.ORDERDIR, message = "排序方式不合法")
     private String orderDir;
 
-    public String getResourceName() {
-        return resourceName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getOrderColumn() {

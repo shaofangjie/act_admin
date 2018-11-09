@@ -62,6 +62,8 @@ public class LoginController extends BaseController implements MainConsts {
                 return renderJson(buildSuccessResult("登录成功"));
             case CAPTCHA_FAILED:
                 return renderJson(buildErrorResult("验证码错误", null));
+            case USER_DISABLE:
+                return renderJson(buildErrorResult("账号已禁用", null));
             case LOGIN_FAILED:
                 return renderJson(buildErrorResult("登录失败,请重试.", null));
             case USERNAME_PWD_FAILED:

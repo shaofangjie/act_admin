@@ -24,4 +24,6 @@ public final class RegexpConsts {
     public static final String FUNNAME = ROUTER;
     public static final String ICONFONT = "^[A-Za-z0-9-]+$"; //icon
     public static final String ROLERESOURCE = "^(\\d+,)*\\d+$"; //1,2,3,4
+    public static final String NICKNAME = "^[\\u4E00-\\u9FA5A-Za-z0-9_]{1,11}$"; //2--12位字母数字汉字下划线组合
+    public static final String SEARCH = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$"; //2--12位字母数字汉字下划线组合
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理员管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/asset/css/font.css">
+    <link rel="stylesheet" href="/asset/css/admin.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="weadmin-nav">
+    <span class="layui-breadcrumb">
+        <a href="">首页</a><a href="">权限管理</a><a><cite>管理员管理</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">&#xe666;</i>
+    </a>
+</div>
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 we-search layui-form-pane">
+            <div class="layui-inline">
+                <input class="layui-input" placeholder="用户名" id="userName" lay-verify="userName">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" placeholder="昵称" id="nickName" lay-verify="nickName">
+            </div>
+            <div class="layui-inline">
+                <select id="roleId" name="roleId">
+                    <%
+                    for(role in adminRoleList){
+                    %>
+                    <option value="${@role.getId()}">${@role.getRoleName()}</option>
+                    <%}%>
+                </select>
+            </div>
+            <button type="button" class="layui-btn" id="searchBut" lay-submit lay-filter="searchBut">查询</button>
+            <button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 0px;">重置</button>
+        </form>
+    </div>
+    <div class="weadmin-block">
+        <%if(@adminResourcesFunList.contains("authority.AdminController.add")) {%>
+        <button class="layui-btn" onclick="addPage('添加管理员','/authority/Admin/add')"><i class="layui-icon">&#xe654;</i>添加</button>
+        <%} else {%>
+        <button class="layui-btn layui-btn-disabled"><i class="layui-icon">&#xe654;</i>添加</button>
+        <%}%>
+
+        <span class="fr" style="line-height:40px"></span>
+    </div>
+
+    <table class="layui-table" id="adminList" lay-filter="adminList"></table>
+
+</div>
+<script type="text/html" id="enable">
+    {{#  if(d.enable == 0){ }}
+    停用
+    {{#  } else { }}
+    启用
+    {{#  } }}
+</script>
+<script type="text/html" id="operation">
+    <%if(@adminResourcesFunList.contains("authority.AdminRoleController.edit")) {%>
+    {{#  if(d.lock == 1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">修改</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    <%} else {%>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">修改</a>
+    <%}%>
+    <%if(@adminResourcesFunList.contains("authority.AdminRoleController.del")) {%>
+    {{#  if(d.lock == 1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    {{#  } }}
+    <%} else {%>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    <%}%>
+</script>
+<script src="/asset/lib/layui/layui.js" charset="utf-8"></script>
+<script src="/asset/js/authority/adminIndex.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

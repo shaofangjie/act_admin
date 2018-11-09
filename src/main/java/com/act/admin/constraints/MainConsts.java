@@ -13,6 +13,7 @@ public interface MainConsts {
         CAPTCHA_FAILED,
         USERNAME_PWD_FAILED,
         LOGIN_FAILED,
+        USER_DISABLE,
         LOGIN_SUCCESS
     }
 
