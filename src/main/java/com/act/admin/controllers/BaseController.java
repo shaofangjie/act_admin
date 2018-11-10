@@ -6,6 +6,7 @@ import act.controller.Controller;
 import act.storage.StorageServiceManager;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
+import com.act.admin.services.BaseService;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.osgl.Osgl;
@@ -35,6 +36,8 @@ public class BaseController extends Controller.Util {
 
     @Inject
     private AppConfig conf;
+    @Inject
+    protected BaseService baseService;
 
     public Result loginOut(H.Session session) {
         session.clear();

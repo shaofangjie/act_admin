@@ -39,7 +39,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="checkbox" name="resourceEditForm.enable" lay-skin="switch" lay-text="启用|停用" <%if(@adminResource.isEnabled() == true){%> checked <%}%> value="1">
+                <input type="checkbox" name="resourceEditForm.enable" lay-skin="switch" lay-text="启用|停用" <%if(@adminResource.isEnabled()){%> checked <%}%> value="1">
             </div>
         </div>
         <div class="layui-form-item">

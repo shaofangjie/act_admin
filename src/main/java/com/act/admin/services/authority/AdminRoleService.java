@@ -59,7 +59,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             return pagedList;
 
         } catch (Exception ex) {
-            logger.error("查询权限角色列表出现错误: %s" + ex.getMessage());
+            logger.error("查询权限角色列表出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
         } finally {
             Ebean.endTransaction();
@@ -150,7 +150,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             return resourcesTree;
 
         } catch (Exception ex) {
-            logger.error("查询权限资源树出现错误: %s" + ex.getMessage());
+            logger.error("查询权限资源树出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
         } finally {
             Ebean.endTransaction();
@@ -232,7 +232,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             Ebean.commitTransaction();
             return AdminRoleEditResult.EDIT_SUCCESS;
         } catch (Exception ex) {
-            logger.error("添加权限角色出现错误: %s" + ex.getMessage());
+            logger.error("修改权限角色出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminRoleEditResult.EDIT_FAILED;
         } finally {
@@ -258,7 +258,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("删除权限角色出现错误: %s" + ex.getMessage());
+            logger.error("删除权限角色出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminRoleDelResult.DEL_FAILED;
         } finally {
@@ -283,7 +283,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("查询后台角色出现错误: %s" + ex.getMessage());
+            logger.error("查询后台角色出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return null;
         } finally {

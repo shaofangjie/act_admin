@@ -1,6 +1,7 @@
 package com.act.admin.controllers;
 
 import com.act.admin.annotation.IgnorePermissionCheck;
+import com.act.admin.models.authority.AdminModel;
 import com.act.admin.services.MainService;
 import com.alibaba.fastjson.JSONObject;
 import org.osgl.http.H;
@@ -27,9 +28,12 @@ public class MainController extends AuthBaseController {
 
     @IgnorePermissionCheck()
     public Result home(H.Session session) {
-        Long adminId = Long.parseLong(session.get("adminid"));
-        JSONObject menuList = mainService.getMenuJsonByAdminId(adminId);
-        return render("/main.html", menuList);
+
+        AdminModel admin = baseService.getAdminById(session.get("adminid"));
+
+        JSONObject menuList = mainService.getMenuJsonByAdminId(admin.getId());
+
+        return render("/main.html", menuList, admin);
     }
 
     @IgnorePermissionCheck()

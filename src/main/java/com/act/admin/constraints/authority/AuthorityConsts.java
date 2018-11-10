@@ -55,4 +55,12 @@ public interface AuthorityConsts {
         ROLE_NOT_EXIST
     }
 
+    enum AdminEditResult {
+        EDIT_FAILED,
+        EDIT_SUCCESS,
+        ADMIN_NOT_EXIST,
+        CANT_EDIT,
+        ROLE_NOT_EXIST
+    }
+
 }

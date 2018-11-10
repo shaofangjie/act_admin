@@ -6,6 +6,7 @@ import com.act.admin.constraints.RegexpConsts;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
 import com.act.admin.forms.authority.AdminAddForm;
+import com.act.admin.forms.authority.AdminEditForm;
 import com.act.admin.forms.authority.AdminSearchForm;
 import com.act.admin.models.authority.AdminModel;
 import com.act.admin.models.authority.AdminRoleModel;
@@ -95,6 +96,41 @@ public class AdminController extends AuthBaseController implements AuthorityCons
                 return renderJson(buildErrorResult("角色不存在", null));
             case ADD_FAILED:
                 return renderJson(buildErrorResult("添加失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
+    public Result edit(@Valid @Pattern(regexp = RegexpConsts.ID, message = "管理员ID格式不合法") String adminId) {
+
+        List<AdminRoleModel> adminRoleList = adminService.getAllRoleList();
+
+        AdminModel admin = adminService.getAdminById(adminId);
+
+        notFoundIfNull(admin);
+
+        return render("/authority/adminEdit.html", adminRoleList, admin);
+    }
+
+    @SpecifiedPermission(value = "authority.AdminController.edit")
+    public Result editHandler(@Valid AdminEditForm adminEditForm) {
+
+        badRequestIfNull(adminEditForm);
+
+        AdminEditResult adminEditResult = adminService.adminUpdate(adminEditForm);
+
+        switch (adminEditResult) {
+            case EDIT_SUCCESS:
+                return renderJson(buildSuccessResult("修改成功"));
+            case ROLE_NOT_EXIST:
+                return renderJson(buildErrorResult("角色不存在", null));
+            case ADMIN_NOT_EXIST:
+                return renderJson(buildErrorResult("管理员不存在", null));
+            case CANT_EDIT:
+                return renderJson(buildErrorResult("管理员不可修改", null));
+            case EDIT_FAILED:
+                return renderJson(buildErrorResult("修改失败,请重试.", null));
             default:
                 throw new BadRequest();
         }

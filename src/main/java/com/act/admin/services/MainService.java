@@ -11,4 +11,7 @@ import com.act.admin.constraints.MainConsts;
  */
 
 public class MainService extends BaseService implements MainConsts {
+
+
+
 }

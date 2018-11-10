@@ -57,6 +57,13 @@
     功能
     {{#  } }}
 </script>
+<script type="text/html" id="enable">
+    {{#  if(d.enabled == 1){ }}
+    启用
+    {{#  } else { }}
+    停用
+    {{#  } }}
+</script>
 <script type="text/html" id="operation">
     <%if(@adminResourcesFunList.contains("authority.AdminResourcesController.edit")) {%>
     <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>

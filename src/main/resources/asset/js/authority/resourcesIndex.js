@@ -41,7 +41,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
             {field: 'sourceName', title: '资源名称', width: '20%'},
             {field: 'sourceOrder', title: '排序', width: '10%'},
             {field: 'sourceFunction', title: '资源方法', width: '30%'},
-            {title: '是否启用', width: '10%', templet: '#enableOperation'},
+            {title: '是否启用', width: '10%', templet: '#enable'},
             {title: '操作', width: '10%', templet: '#operation'}
         ]],
         url: '/authority/AdminResources/list',

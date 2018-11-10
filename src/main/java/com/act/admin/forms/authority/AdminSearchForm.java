@@ -18,7 +18,7 @@ public class AdminSearchForm {
     private String userName;
     @EmptyOrPattern(regexp = RegexpConsts.SEARCH, message = "昵称格式不合法")
     private String nickName;
-    @EmptyOrPattern(regexp = RegexpConsts.ID, message = "角色ID格式不合法")
+    @EmptyOrPattern(regexp = RegexpConsts.NUM, message = "角色ID格式不合法")
     private String roleId;
     @EmptyOrPattern(regexp = RegexpConsts.ORDERCOLUMN, message = "排序字段不合法")
     private String orderColumn;

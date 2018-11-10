@@ -3,6 +3,7 @@ package com.act.admin.services.authority;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.forms.authority.AdminAddForm;
+import com.act.admin.forms.authority.AdminEditForm;
 import com.act.admin.forms.authority.AdminSearchForm;
 import com.act.admin.models.authority.AdminModel;
 import com.act.admin.models.authority.AdminRoleModel;
@@ -42,7 +43,7 @@ public class AdminService extends BaseService implements AuthorityConsts {
             if (S.isNotBlank(adminSearchForm.getNickName())) {
                 adminModelJunction.add(Expr.like("nickName", "%" + adminSearchForm.getNickName() + "%"));
             }
-            if (S.isNotBlank(adminSearchForm.getRoleId())) {
+            if (S.isNotBlank(adminSearchForm.getRoleId()) && !"0".equals(adminSearchForm.getRoleId())) {
                 adminModelJunction.add(Expr.eq("adminRole.id", adminSearchForm.getRoleId()));
             }
 
@@ -65,7 +66,7 @@ public class AdminService extends BaseService implements AuthorityConsts {
             return pagedList;
 
         } catch (Exception ex) {
-            logger.error("查询管理员列表出现错误: %s" + ex.getMessage());
+            logger.error("查询管理员列表出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
         } finally {
             Ebean.endTransaction();
@@ -108,9 +109,54 @@ public class AdminService extends BaseService implements AuthorityConsts {
             Ebean.commitTransaction();
             return AdminAddResult.ADD_SUCCESS;
         } catch (Exception ex) {
-            logger.error("保存管理员出现错误: %s" + ex.getMessage());
+            logger.error("保存管理员出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminAddResult.ADD_FAILED;
+        } finally {
+            Ebean.endTransaction();
+        }
+
+    }
+
+    public AdminEditResult adminUpdate(final AdminEditForm adminEditForm) {
+
+        try {
+            Ebean.beginTransaction();
+
+            AdminModel admin = getAdminById(adminEditForm.getAdminId());
+
+            AdminRoleModel adminRole = AdminRoleModel.find.query()
+                    .where(Expr.eq("id", adminEditForm.getRoleId()))
+                    .findOne();
+
+            if (null == admin) {
+                Ebean.commitTransaction();
+                return AdminEditResult.ADMIN_NOT_EXIST;
+            }
+
+            if (null == adminRole) {
+                Ebean.commitTransaction();
+                return AdminEditResult.ROLE_NOT_EXIST;
+            }
+
+            if (admin.isLock()) {
+                Ebean.commitTransaction();
+                return AdminEditResult.CANT_EDIT;
+            }
+
+            admin.setNickName(adminEditForm.getNickName());
+            admin.setPassword(DigestUtil.sha256Hex(adminEditForm.getPassword().trim()));
+            admin.setEnabled(null != adminEditForm.getEnable() && "1".equals(adminEditForm.getEnable()));
+            admin.setAdminRole(adminRole);
+
+            admin.update();
+
+            Ebean.commitTransaction();
+            return AdminEditResult.EDIT_SUCCESS;
+        } catch (Exception ex) {
+            logger.error("修改管理员出现错误: %s", ex.getMessage());
+            Ebean.rollbackTransaction();
+            return AdminEditResult.EDIT_FAILED;
         } finally {
             Ebean.endTransaction();
         }
@@ -129,7 +175,7 @@ public class AdminService extends BaseService implements AuthorityConsts {
             return adminRoleList;
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("查询所有启用角色出现错误: %s" + ex.getMessage());
+            logger.error("查询所有启用角色出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return null;
         } finally {
@@ -137,6 +183,5 @@ public class AdminService extends BaseService implements AuthorityConsts {
         }
 
     }
-
 
 }

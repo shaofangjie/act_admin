@@ -32,8 +32,6 @@ public class AuthBaseController extends BaseController {
     @Inject
     private ActionContext context;
     @Inject
-    private BaseService baseService;
-    @Inject
     private AdminModel loginAdmin;
 
     @Before

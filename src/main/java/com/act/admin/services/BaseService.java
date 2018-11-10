@@ -5,8 +5,11 @@ import com.act.admin.models.authority.AdminModel;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.ebean.Ebean;
 import io.ebean.Expr;
 import org.osgl.http.H;
+import org.osgl.logging.L;
+import org.osgl.logging.Logger;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +23,8 @@ import java.util.List;
  */
 
 public class BaseService {
+
+    private static Logger logger = L.get(BaseService.class);
 
     public List<AdminResourcesModel> getAllResourcesList() {
 
@@ -98,6 +103,27 @@ public class BaseService {
         menuJson.put("menu", topLevelMenuJson);
 
         return menuJson;
+    }
+
+    public AdminModel getAdminById(final String adminId) {
+
+        try {
+            Ebean.beginTransaction();
+
+            AdminModel admin = AdminModel.find.byId(Long.parseLong(adminId));
+
+            Ebean.commitTransaction();
+
+            return admin;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error("按ID查询管理员出现错误: %s", ex.getMessage());
+            Ebean.rollbackTransaction();
+            return null;
+        } finally {
+            Ebean.endTransaction();
+        }
+
     }
 
 }
