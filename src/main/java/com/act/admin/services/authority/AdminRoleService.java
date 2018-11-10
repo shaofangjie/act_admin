@@ -185,7 +185,7 @@ public class AdminRoleService extends BaseService implements AuthorityConsts {
             Ebean.commitTransaction();
             return AdminRoleAddResult.ADD_SUCCESS;
         } catch (Exception ex) {
-            logger.error("添加权限角色出现错误: %s" + ex.getMessage());
+            logger.error("添加权限角色出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminRoleAddResult.ADD_FAILED;
         } finally {

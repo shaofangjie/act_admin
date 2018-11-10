@@ -60,7 +60,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             return pagedList;
 
         } catch (Exception ex) {
-            logger.error("查询后台资源列表出现错误: %s" + ex.getMessage());
+            logger.error("查询后台资源列表出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
         } finally {
             Ebean.endTransaction();
@@ -100,7 +100,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             Ebean.commitTransaction();
             return AdminResourceAddResult.ADD_SUCCESS;
         } catch (Exception ex) {
-            logger.error("保存后台资源出现错误: %s" + ex.getMessage());
+            logger.error("保存后台资源出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminResourceAddResult.ADD_FAILED;
         } finally {
@@ -146,7 +146,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             Ebean.commitTransaction();
             return AdminResourceEditResult.EDIT_SUCCESS;
         } catch (Exception ex) {
-            logger.error("更新后台资源出现错误: %s" + ex.getMessage());
+            logger.error("更新后台资源出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminResourceEditResult.EDIT_FAILED;
         } finally {
@@ -173,7 +173,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("删除后台资源出现错误: %s" + ex.getMessage());
+            logger.error("删除后台资源出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return AdminResourceDelResult.DEL_FAILED;
         } finally {
@@ -224,7 +224,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("查询后台资源列表出现错误: %s" + ex.getMessage());
+            logger.error("查询后台资源列表出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return null;
         } finally {
@@ -246,7 +246,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            logger.error("查询后台资源出现错误: %s" + ex.getMessage());
+            logger.error("查询后台资源出现错误: %s", ex.getMessage());
             Ebean.rollbackTransaction();
             return null;
         } finally {

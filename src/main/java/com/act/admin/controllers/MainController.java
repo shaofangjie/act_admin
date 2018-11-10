@@ -29,11 +29,9 @@ public class MainController extends AuthBaseController {
     @IgnorePermissionCheck()
     public Result home(H.Session session) {
 
-        AdminModel admin = baseService.getAdminById(session.get("adminid"));
+        JSONObject menuList = mainService.getMenuJsonByAdminId(Long.parseLong(session.get("adminid")));
 
-        JSONObject menuList = mainService.getMenuJsonByAdminId(admin.getId());
-
-        return render("/main.html", menuList, admin);
+        return render("/main.html", menuList);
     }
 
     @IgnorePermissionCheck()

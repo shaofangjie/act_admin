@@ -137,5 +137,26 @@ public class AdminController extends AuthBaseController implements AuthorityCons
 
     }
 
+    public Result del(@Valid @Pattern(regexp = RegexpConsts.ID, message = "管理员ID格式不合法") String adminId) {
+
+        AdminModel admin = adminService.getAdminById(adminId);
+
+        notFoundIfNull(admin);
+
+        AdminDelResult adminDelResult = adminService.adminDel(admin);
+
+        switch (adminDelResult) {
+            case DEL_SUCCESS:
+                return renderJson(buildSuccessResult("删除成功"));
+            case CANT_DEL:
+                return renderJson(buildErrorResult("超级管理员,不允许删除.", null));
+            case DEL_FAILED:
+                return renderJson(buildErrorResult("删除失败,请重试.", null));
+            default:
+                throw new BadRequest();
+        }
+
+    }
+
 
 }

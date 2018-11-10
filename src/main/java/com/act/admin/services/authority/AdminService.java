@@ -163,6 +163,31 @@ public class AdminService extends BaseService implements AuthorityConsts {
 
     }
 
+    public AdminDelResult adminDel(AdminModel admin) {
+
+        try {
+            Ebean.beginTransaction();
+
+            if (admin.isLock()) {
+                Ebean.commitTransaction();
+                return AdminDelResult.CANT_DEL;
+            }
+
+            admin.delete();
+
+            Ebean.commitTransaction();
+            return AdminDelResult.DEL_SUCCESS;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error("删除管理员出现错误: %s", ex.getMessage());
+            Ebean.rollbackTransaction();
+            return AdminDelResult.DEL_FAILED;
+        } finally {
+            Ebean.endTransaction();
+        }
+    }
+
     public List<AdminRoleModel> getAllRoleList() {
 
         try {

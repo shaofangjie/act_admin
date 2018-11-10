@@ -56,6 +56,7 @@ public class AuthBaseController extends BaseController {
         }
 
         context.renderArg("adminResourcesFunList", adminResourcesFunList);
+        context.renderArg("admin", loginAdmin);
     }
 
     private void getLoginAdminInfo(H.Session session) {

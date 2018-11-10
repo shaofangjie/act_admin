@@ -63,4 +63,10 @@ public interface AuthorityConsts {
         ROLE_NOT_EXIST
     }
 
+    enum AdminDelResult {
+        DEL_FAILED,
+        DEL_SUCCESS,
+        CANT_DEL
+    }
+
 }
