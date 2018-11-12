@@ -22,19 +22,16 @@ public class ResourceAddForm {
     @NotNull(message = "资源类型不能为空")
     @Pattern(regexp = RegexpConsts.NUM, message = "资源类型格式不合法")
     private String resourceType;
-    @Pattern(regexp = RegexpConsts.NUM, message = "状态格式不合法")
+    @EmptyOrPattern(regexp = RegexpConsts.NUM, message = "状态格式不合法")
     private String enable;
-    @NotNull(message = "资源图标不能为空")
-    @Pattern(regexp = RegexpConsts.ICONFONT, message = "资源图标不合法")
+    @EmptyOrPattern(regexp = RegexpConsts.ICONFONT, message = "资源图标不合法")
     private String iconfont;
     @NotNull(message = "资源名不能为空")
     @Pattern(regexp = RegexpConsts.SOURCENAME, message = "资源名格式不合法")
     private String resourceName;
-    @NotNull(message = "资源路由不能为空")
-    @Pattern(regexp = RegexpConsts.ROUTER, message = "资源路由格式不合法")
+    @EmptyOrPattern(regexp = RegexpConsts.ROUTER, message = "资源路由格式不合法")
     private String resourceUrl;
-    @NotNull(message = "资源方法不能为空")
-    @Pattern(regexp = RegexpConsts.FUNNAME, message = "资源方法格式不合法")
+    @EmptyOrPattern(regexp = RegexpConsts.FUNNAME, message = "资源方法格式不合法")
     private String resourceFun;
     @NotNull(message = "资源排序不能为空")
     @Pattern(regexp = RegexpConsts.NUM, message = "资源排序格式不合法")

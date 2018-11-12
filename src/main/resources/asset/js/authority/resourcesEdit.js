@@ -32,9 +32,7 @@ layui.use(['iconPicker', 'form', 'jquery', 'admin'], function() {
     form.verify({
         iconfont: function (value) {
             var reg = /^[A-Za-z0-9-]+$/;
-            if (isEmptyString(value)) {
-                return "请选择资源图标";
-            } else if(!reg.test(value)){
+            if(!isEmptyString(value) && !reg.test(value)){
                 return "资源图标格式不合法";
             }
         },
@@ -48,17 +46,13 @@ layui.use(['iconPicker', 'form', 'jquery', 'admin'], function() {
         },
         resourceUrl: function (value) {
             var reg = /^[A-Za-z0-9/._-]+$/;
-            if (isEmptyString(value)) {
-                return "请输入资源路由";
-            } else if(!reg.test(value)){
+            if(!isEmptyString(value) && !reg.test(value)){
                 return "资源路由格式不合法";
             }
         },
         resourceFun: function (value) {
             var reg = /^[A-Za-z0-9/._-]+$/;
-            if (isEmptyString(value)) {
-                return "请输入资源方法";
-            } else if(!reg.test(value)){
+            if(!isEmptyString(value) && !reg.test(value)){
                 return "资源方法格式不合法";
             }
         },
@@ -71,6 +65,24 @@ layui.use(['iconPicker', 'form', 'jquery', 'admin'], function() {
             }
         }
 
+    });
+
+    form.on('select(resourceType)', function(data){
+        var resourceType = data.value;
+        var iconDiv = $("#iconDiv");
+        if (resourceType == 0 ) {
+            iconDiv.show();
+            $("#urlDiv").hide();
+            $("#funDiv").hide();
+        } else if (resourceType == 1) {
+            iconDiv.show();
+            $("#urlDiv").show();
+            $("#funDiv").show();
+        } else {
+            iconDiv.hide();
+            $("#urlDiv").show();
+            $("#funDiv").show();
+        }
     });
 
     form.on('submit(edit)', function (data) {

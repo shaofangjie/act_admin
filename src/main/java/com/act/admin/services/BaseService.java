@@ -62,7 +62,7 @@ public class BaseService {
         JSONArray topLevelMenuJson = new JSONArray();
         for (AdminResourcesModel topLevelResources : adminResourcesList) {
             JSONObject topLevelMenu = new JSONObject();
-            if (0 == topLevelResources.getSourceType() && topLevelResources.isEnabled() && null == topLevelResources.getSourcePid()) {
+            if ((0 == topLevelResources.getSourceType() || 1 == topLevelResources.getSourceType()) && topLevelResources.isEnabled() && null == topLevelResources.getSourcePid()) {
                 topLevelMenu.put("id", topLevelResources.getId());
                 topLevelMenu.put("order", topLevelResources.getSourceOrder());
                 topLevelMenu.put("url", topLevelResources.getSourceUrl());
@@ -73,7 +73,7 @@ public class BaseService {
             JSONArray senondLevelMenuJson = new JSONArray();
             for (AdminResourcesModel secondLevelResources : adminResourcesList) {
                 JSONObject secondLevelMenu = new JSONObject();
-                if (0 == secondLevelResources.getSourceType() && secondLevelResources.isEnabled() && null != secondLevelResources.getSourcePid() && secondLevelResources.getSourcePid().getId().equals(topLevelResources.getId())) {
+                if ((0 == secondLevelResources.getSourceType() || 1 == secondLevelResources.getSourceType()) && secondLevelResources.isEnabled() && null != secondLevelResources.getSourcePid() && secondLevelResources.getSourcePid().getId().equals(topLevelResources.getId())) {
                     secondLevelMenu.put("id", secondLevelResources.getId());
                     secondLevelMenu.put("order", secondLevelResources.getSourceOrder());
                     secondLevelMenu.put("url", secondLevelResources.getSourceUrl());
@@ -84,7 +84,7 @@ public class BaseService {
                 JSONArray threeLevelMenuJson = new JSONArray();
                 for (AdminResourcesModel threeLevelResources : adminResourcesList) {
                     JSONObject threeLevelMenu = new JSONObject();
-                    if (0 == threeLevelResources.getSourceType() && threeLevelResources.isEnabled() && null != threeLevelResources.getSourcePid() && threeLevelResources.getSourcePid().getId().equals(secondLevelResources.getId())) {
+                    if ((0 == threeLevelResources.getSourceType() || 1 == threeLevelResources.getSourceType()) && threeLevelResources.isEnabled() && null != threeLevelResources.getSourcePid() && threeLevelResources.getSourcePid().getId().equals(secondLevelResources.getId())) {
                         threeLevelMenu.put("id", threeLevelResources.getId());
                         threeLevelMenu.put("order", threeLevelResources.getSourceOrder());
                         threeLevelMenu.put("url", threeLevelResources.getSourceUrl());

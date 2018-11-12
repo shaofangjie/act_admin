@@ -13,11 +13,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父级资源</label>
             <div class="layui-input-block">
-                <select name="resourceAddForm.resourcePid">
+                <select name="resourceAddForm.resourcePid" id="resourcePid" lay-filter="resourcePid">
                     <%
                     for(resource in allParentResources){
                     %>
-                    <option value="${resource.id}">${resource.name}</option>
+                    <option value="${resource.id}" type="${resource.type}">${resource.name}</option>
                     <%}%>
                 </select>
             </div>
@@ -25,9 +25,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">资源类型</label>
             <div class="layui-input-block">
-                <select name="resourceAddForm.resourceType">
-                    <option value="0">菜单</option>
-                    <option value="1">数据</option>
+                <select name="resourceAddForm.resourceType" lay-filter="resourceType">
+                    <option value="0">目录</option>
+                    <option value="1">菜单</option>
                     <option value="2">功能</option>
                 </select>
             </div>
@@ -38,7 +38,7 @@
                 <input type="checkbox" name="resourceAddForm.enable" lay-skin="switch" lay-text="启用|停用" checked value="1">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item" id="iconDiv">
             <label class="layui-form-label">资源图标</label>
             <div class="layui-input-block">
                 <input type="text" name="resourceAddForm.iconfont" placeholder="请输入资源图标" autocomplete="off" id="iconPicker" lay-filter="iconPicker" class="layui-input" lay-verify="iconfont" value="layui-icon-circle-dot">
@@ -50,13 +50,13 @@
                 <input type="text" name="resourceAddForm.resourceName" placeholder="请输入资源名称" autocomplete="off" class="layui-input" lay-verify="resourceName">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item" id="urlDiv" style="display: none">
             <label class="layui-form-label">资源路由</label>
             <div class="layui-input-block">
                 <input type="text" name="resourceAddForm.resourceUrl" placeholder="请输入资源路由" autocomplete="off" class="layui-input" lay-verify="resourceUrl">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item" id="funDiv" style="display: none">
             <label class="layui-form-label">资源方法</label>
             <div class="layui-input-block">
                 <input type="text" name="resourceAddForm.resourceFun" placeholder="请输入资源方法" autocomplete="off" class="layui-input" lay-verify="resourceFun">

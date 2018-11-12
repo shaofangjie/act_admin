@@ -23,18 +23,18 @@ public class AdminResourcesModel extends BaseModel {
     private List<AdminRoleModel> adminRoles;
 
     @Column(name = "source_type", columnDefinition = "integer default 0")
-    private int sourceType; //资源类型 0:菜单 1:数据 2:功能
+    private int sourceType; //资源类型 0:目录 1:菜单 2:功能
 
-    @Column(name = "iconfont", length = 100, unique = false, nullable = false)
+    @Column(name = "iconfont", length = 100, unique = false, nullable = true)
     private String iconfont; //图标
 
     @Column(name = "source_name", length = 100, unique = false, nullable = false)
     private String sourceName; //资源名
 
-    @Column(name = "source_url", length = 255, unique = false, nullable = false)
+    @Column(name = "source_url", length = 255, unique = false, nullable = true)
     private String sourceUrl; //资源路径
 
-    @Column(name = "source_function", length = 255, unique = false, nullable = false)
+    @Column(name = "source_function", length = 255, unique = false, nullable = true)
     private String sourceFunction; //资源方法
 
     @Column(name = "enabled")
