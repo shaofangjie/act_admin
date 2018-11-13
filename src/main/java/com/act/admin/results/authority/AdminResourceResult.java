@@ -10,11 +10,29 @@ package com.act.admin.results.authority;
 public class AdminResourceResult {
 
     private Long id;
+    private Long pid;
     private int sourceType;
     private String sourceName;
     private int sourceOrder;
     private String sourceFunction;
     private int enabled;
+    private int lock;
+
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    public int getLock() {
+        return lock;
+    }
+
+    public void setLock(int lock) {
+        this.lock = lock;
+    }
 
     public Long getId() {
         return id;

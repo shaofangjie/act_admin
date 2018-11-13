@@ -33,6 +33,7 @@ public class AppInitData {
                 adminResources1.setIconfont("layui-icon-group");
                 adminResources1.setSourceName("权限管理");
                 adminResources1.setEnabled(true);
+                adminResources1.setLock(true);
                 adminResources1.setSourceOrder(1);
                 adminResources1.save();
 
@@ -44,6 +45,7 @@ public class AppInitData {
                 adminResources12.setSourceUrl("/authority/Admin/index");
                 adminResources12.setSourceFunction("authority.AdminController.index");
                 adminResources12.setEnabled(true);
+                adminResources12.setLock(true);
                 adminResources12.setSourceOrder(1);
                 adminResources12.save();
                 AdminResourcesModel adminResources13 = new AdminResourcesModel();
@@ -53,6 +55,7 @@ public class AppInitData {
                 adminResources13.setSourceUrl("/authority/Admin/list");
                 adminResources13.setSourceFunction("authority.AdminController.list");
                 adminResources13.setEnabled(true);
+                adminResources13.setLock(true);
                 adminResources13.setSourceOrder(1);
                 adminResources13.save();
                 AdminResourcesModel adminResources14 = new AdminResourcesModel();
@@ -62,6 +65,7 @@ public class AppInitData {
                 adminResources14.setSourceUrl("/authority/Admin/add");
                 adminResources14.setSourceFunction("authority.AdminController.add");
                 adminResources14.setEnabled(true);
+                adminResources14.setLock(true);
                 adminResources14.setSourceOrder(2);
                 adminResources14.save();
                 AdminResourcesModel adminResources15 = new AdminResourcesModel();
@@ -71,6 +75,7 @@ public class AppInitData {
                 adminResources15.setSourceUrl("/authority/Admin/edit");
                 adminResources15.setSourceFunction("authority.AdminController.edit");
                 adminResources15.setEnabled(true);
+                adminResources15.setLock(true);
                 adminResources15.setSourceOrder(3);
                 adminResources15.save();
                 AdminResourcesModel adminResources16 = new AdminResourcesModel();
@@ -80,6 +85,7 @@ public class AppInitData {
                 adminResources16.setSourceUrl("/authority/Admin/del");
                 adminResources16.setSourceFunction("authority.AdminController.del");
                 adminResources16.setEnabled(true);
+                adminResources16.setLock(true);
                 adminResources16.setSourceOrder(4);
                 adminResources16.save();
 
@@ -91,6 +97,7 @@ public class AppInitData {
                 adminResources7.setSourceUrl("/authority/AdminRole/index");
                 adminResources7.setSourceFunction("authority.AdminRoleController.index");
                 adminResources7.setEnabled(true);
+                adminResources7.setLock(true);
                 adminResources7.setSourceOrder(1);
                 adminResources7.save();
                 AdminResourcesModel adminResources8 = new AdminResourcesModel();
@@ -100,6 +107,7 @@ public class AppInitData {
                 adminResources8.setSourceUrl("/authority/AdminRole/list");
                 adminResources8.setSourceFunction("authority.AdminRoleController.list");
                 adminResources8.setEnabled(true);
+                adminResources8.setLock(true);
                 adminResources8.setSourceOrder(1);
                 adminResources8.save();
                 AdminResourcesModel adminResources9 = new AdminResourcesModel();
@@ -109,6 +117,7 @@ public class AppInitData {
                 adminResources9.setSourceUrl("/authority/AdminRole/add");
                 adminResources9.setSourceFunction("authority.AdminRoleController.add");
                 adminResources9.setEnabled(true);
+                adminResources9.setLock(true);
                 adminResources9.setSourceOrder(1);
                 adminResources9.save();
                 AdminResourcesModel adminResources10 = new AdminResourcesModel();
@@ -118,6 +127,7 @@ public class AppInitData {
                 adminResources10.setSourceUrl("/authority/AdminRole/edit");
                 adminResources10.setSourceFunction("authority.AdminRoleController.edit");
                 adminResources10.setEnabled(true);
+                adminResources10.setLock(true);
                 adminResources10.setSourceOrder(1);
                 adminResources10.save();
                 AdminResourcesModel adminResources11 = new AdminResourcesModel();
@@ -127,6 +137,7 @@ public class AppInitData {
                 adminResources11.setSourceUrl("/authority/AdminRole/del");
                 adminResources11.setSourceFunction("authority.AdminRoleController.del");
                 adminResources11.setEnabled(true);
+                adminResources11.setLock(true);
                 adminResources11.setSourceOrder(1);
                 adminResources11.save();
 
@@ -138,6 +149,7 @@ public class AppInitData {
                 adminResources2.setSourceUrl("/authority/AdminResources/index");
                 adminResources2.setSourceFunction("authority.AdminResourcesController.index");
                 adminResources2.setEnabled(true);
+                adminResources2.setLock(true);
                 adminResources2.setSourceOrder(2);
                 adminResources2.save();
                 AdminResourcesModel adminResources3 = new AdminResourcesModel();
@@ -147,6 +159,7 @@ public class AppInitData {
                 adminResources3.setSourceUrl("/authority/AdminResources/list");
                 adminResources3.setSourceFunction("authority.AdminResourcesController.list");
                 adminResources3.setEnabled(true);
+                adminResources3.setLock(true);
                 adminResources3.setSourceOrder(2);
                 adminResources3.save();
                 AdminResourcesModel adminResources4 = new AdminResourcesModel();
@@ -156,6 +169,7 @@ public class AppInitData {
                 adminResources4.setSourceUrl("/authority/AdminResources/add");
                 adminResources4.setSourceFunction("authority.AdminResourcesController.add");
                 adminResources4.setEnabled(true);
+                adminResources4.setLock(true);
                 adminResources4.setSourceOrder(3);
                 adminResources4.save();
                 AdminResourcesModel adminResources5 = new AdminResourcesModel();
@@ -165,6 +179,7 @@ public class AppInitData {
                 adminResources5.setSourceUrl("/authority/AdminResources/edit");
                 adminResources5.setSourceFunction("authority.AdminResourcesController.edit");
                 adminResources5.setEnabled(true);
+                adminResources5.setLock(true);
                 adminResources5.setSourceOrder(4);
                 adminResources5.save();
                 AdminResourcesModel adminResources6 = new AdminResourcesModel();
@@ -174,6 +189,7 @@ public class AppInitData {
                 adminResources6.setSourceUrl("/authority/AdminResources/del");
                 adminResources6.setSourceFunction("authority.AdminResourcesController.del");
                 adminResources6.setEnabled(true);
+                adminResources6.setLock(true);
                 adminResources6.setSourceOrder(5);
                 adminResources6.save();
 

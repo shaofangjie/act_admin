@@ -1,57 +1,68 @@
 layui.config({
     base: '/asset/js/'
     , version: 'v1'
-}).use('admin');
-layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
+}).extend({
+    treetable: 'module/treetable'
+});
+layui.use(['form', 'table', 'jquery', 'admin', 'layer', 'treetable'], function () {
     var $ = layui.jquery,
         form = layui.form,
         table = layui.table,
+        treetable = layui.treetable,
         layer = layui.layer,
         admin = layui.admin;
 
-    form.verify({
-        sourceName: function (value) {
-            var reg = /^[\u4E00-\u9FA5A-Za-z0-9_]+$/;
-            if (!isEmptyString(value) && !reg.test(value)) {
-                return "资源名格式不合法";
-            }
-        }
-    });
-
     var queryParams = function () {
         var param = {resourceSearchForm: {}};
-        param.resourceSearchForm.orderColumn = "whenCreated";
-        param.resourceSearchForm.orderDir = "asc";
         param.resourceSearchForm.resourceName = $("#resourceName").val();
         return param;
     };
 
-    var resourceTable = table.render({
-        elem: '#resourcesList',
-        limits: [20, 40, 60, 100, 150, 300],
-        limit: 20,
-        skin: '#1E9FFF', //自定义选中色值
-        loading: true,
-        method: 'POST',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        page: true, //开启分页
-        cols: [[
-            {field: 'id', title: 'ID', width: '10%'},
-            {title: '资源类型', width: '10%', templet: '#type'},
-            {field: 'sourceName', title: '资源名称', width: '20%'},
-            {field: 'sourceOrder', title: '排序', width: '10%'},
-            {field: 'sourceFunction', title: '资源方法', width: '30%'},
-            {title: '是否启用', width: '10%', templet: '#enable'},
-            {title: '操作', width: '10%', templet: '#operation'}
-        ]],
-        url: '/authority/AdminResources/list',
-        where: queryParams()
-    });
-
-    form.on('submit(searchBut)', function (data) {
-        resourceTable.reload({
+    var initTreeTable = function () {
+        treetable.render({
+            elem: '#resourcesList',
+            treeColIndex: 1,
+            treeSpid: 0,
+            treeIdName: 'id',
+            treePidName: 'pid',
+            loading: true,
+            url: '/authority/AdminResources/list',
+            page: false,
+            cols: [[
+                {field: 'id', title: 'ID', width: '10%'},
+                {field: 'sourceName', title: '资源名称', width: '20%'},
+                {title: '资源类型', width: '10%', templet: '#type'},
+                {field: 'sourceOrder', title: '排序', width: '10%'},
+                {field: 'sourceFunction', title: '资源方法', width: '30%'},
+                {title: '是否启用', width: '10%', templet: '#enable'},
+                {title: '操作', width: '10%', templet: '#operation'}
+            ]],
             where: queryParams()
         });
+    };
+
+    initTreeTable();
+
+    $("#addButton").click(function () {
+
+        var w = ($(window).width() * 0.9);
+        var h = ($(window).height() - 50);
+
+        layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade: 0.4,
+            title: '添加权限资源',
+            content: '/authority/AdminResources/add'
+        });
+
+        $("a.layui-layer-close").click(function () {
+            initTreeTable();
+        });
+
     });
 
     table.on('tool(resourcesList)', function (obj) { //注：tool是工具条事件名，resourcesList是table原始容器的属性 lay-filter="对应的值"
@@ -60,7 +71,25 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
         var dataId = data.id;
         console.log(layEvent + '-----' + dataId);
         if (layEvent === 'edit') {
-            addPage('修改权限资源', '/authority/AdminResources/edit/' + dataId);
+
+            var w = ($(window).width() * 0.9);
+            var h = ($(window).height() - 50);
+
+            layer.open({
+                type: 2,
+                area: [w + 'px', h + 'px'],
+                fix: false, //不固定
+                maxmin: true,
+                shadeClose: true,
+                shade: 0.4,
+                title: '修改权限资源',
+                content: '/authority/AdminResources/edit/' + dataId
+            });
+
+            $("a.layui-layer-close").click(function () {
+                initTreeTable();
+            });
+
         }
         if (layEvent === 'del') {
             layer.open({
@@ -74,9 +103,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer'], function () {
                         success:function(data){
                             if(data.errcode === 0){
                                 layer.msg(data.msg, {time: 2000, icon:1});
-                                resourceTable.reload({
-                                    where: queryParams()
-                                });
+                                initTreeTable();
                             }else{
                                 layer.msg(data.msg, {time: 2000, icon:5});
                             }

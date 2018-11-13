@@ -3,7 +3,6 @@ package com.act.admin.services.authority;
 import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.forms.authority.ResourceAddForm;
 import com.act.admin.forms.authority.ResourceEditForm;
-import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminModel;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.models.authority.AdminRoleModel;
@@ -11,10 +10,8 @@ import com.act.admin.services.BaseService;
 import io.ebean.Ebean;
 import io.ebean.Expr;
 import io.ebean.Junction;
-import io.ebean.PagedList;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
-import org.osgl.util.S;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,34 +29,21 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
 
     private static Logger logger = L.get(AdminResourcesService.class);
 
-    public PagedList<AdminResourcesModel> getAdminResourcePageList(final ResourceSearchForm resourceSearchForm, final int page, final int limit) {
+    public List<AdminResourcesModel> getAdminResourcePageList() {
 
         try {
             Ebean.beginTransaction();
 
             Junction<AdminResourcesModel> adminResourcesModelJunction = AdminResourcesModel.find.query().where().conjunction();
 
-            if (S.isNotBlank(resourceSearchForm.getResourceName())) {
-                adminResourcesModelJunction.add(Expr.eq("sourceName", resourceSearchForm.getResourceName()));
-            }
             //排序
-            if ("asc".equals(resourceSearchForm.getOrderDir())) {
-                adminResourcesModelJunction.order().asc(resourceSearchForm.getOrderColumn());
-            } else {
-                adminResourcesModelJunction.order().desc(resourceSearchForm.getOrderColumn());
-            }
+            adminResourcesModelJunction.order().asc("whenCreated");
 
-
-            //分页参数
-            adminResourcesModelJunction.setFirstRow((page - 1) * limit);
-            adminResourcesModelJunction.setMaxRows(limit);
-
-            PagedList<AdminResourcesModel> pagedList = adminResourcesModelJunction.findPagedList();
-            pagedList.loadCount();
+            List<AdminResourcesModel> resourcesList = adminResourcesModelJunction.findList();
 
             Ebean.commitTransaction();
 
-            return pagedList;
+            return resourcesList;
 
         } catch (Exception ex) {
             logger.error("查询后台资源列表出现错误: %s", ex.getMessage());
@@ -92,6 +76,7 @@ public class AdminResourcesService extends BaseService implements AuthorityConst
             newResource.setSourcePid(parentResource);
             newResource.setSourceType(Integer.parseInt(resourceAddForm.getResourceType()));
             newResource.setEnabled(null != resourceAddForm.getEnable() && "1".equals(resourceAddForm.getEnable()));
+            newResource.setLock(false);
             newResource.setSourceName(resourceAddForm.getResourceName());
             newResource.setSourceUrl(resourceAddForm.getResourceUrl());
             newResource.setSourceFunction(resourceAddForm.getResourceFun());

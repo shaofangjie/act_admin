@@ -7,13 +7,11 @@ import com.act.admin.constraints.authority.AuthorityConsts;
 import com.act.admin.controllers.AuthBaseController;
 import com.act.admin.forms.authority.ResourceAddForm;
 import com.act.admin.forms.authority.ResourceEditForm;
-import com.act.admin.forms.authority.ResourceSearchForm;
 import com.act.admin.models.authority.AdminResourcesModel;
 import com.act.admin.results.authority.AdminResourceResult;
 import com.act.admin.services.authority.AdminResourcesService;
 import com.act.admin.validateviolation.LayTableVaildateAdvice;
 import com.alibaba.fastjson.JSONObject;
-import io.ebean.PagedList;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
 import org.osgl.mvc.annotation.ResponseStatus;
@@ -48,23 +46,25 @@ public class AdminResourcesController extends AuthBaseController implements Auth
 
     @ResponseStatus(200)
     @ValidateViolationAdvisor(LayTableVaildateAdvice.class)
-    public Result list(@Valid ResourceSearchForm resourceSearchForm, @Pattern(regexp = RegexpConsts.PAGE, message = "页码格式不合法") String page, @Pattern(regexp = RegexpConsts.LIMIT, message = "分页条数格式不合法") String limit) {
+    public Result list() {
 
-        PagedList<AdminResourcesModel> adminResourcePageList = adminResourcesService.getAdminResourcePageList(resourceSearchForm, Integer.parseInt(page), Integer.parseInt(limit));
+        List<AdminResourcesModel> adminResourceList = adminResourcesService.getAdminResourcePageList();
 
         List<Object> adminResourceResultList = new ArrayList<>();
-        for (AdminResourcesModel adminResources : adminResourcePageList.getList()) {
+        for (AdminResourcesModel adminResources : adminResourceList) {
             AdminResourceResult adminResourceResult = new AdminResourceResult();
             adminResourceResult.setId(adminResources.getId());
+            adminResourceResult.setPid(null == adminResources.getSourcePid() ? 0 : adminResources.getSourcePid().getId());
             adminResourceResult.setSourceType(adminResources.getSourceType());
             adminResourceResult.setSourceName(adminResources.getSourceName());
             adminResourceResult.setSourceFunction(adminResources.getSourceFunction());
             adminResourceResult.setSourceOrder(adminResources.getSourceOrder());
             adminResourceResult.setEnabled(adminResources.isEnabled() ? 1 : 0);
+            adminResourceResult.setLock(adminResources.isLock() ? 1 : 0);
             adminResourceResultList.add(adminResourceResult);
         }
 
-        JSONObject adminResourceJson = buildTableResult(0, "", adminResourcePageList.getTotalCount(), adminResourceResultList);
+        JSONObject adminResourceJson = buildTableResult(0, "", adminResourceResultList.size(), adminResourceResultList);
 
         return renderJson(adminResourceJson);
     }

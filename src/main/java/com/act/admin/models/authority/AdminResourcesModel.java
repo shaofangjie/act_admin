@@ -43,6 +43,9 @@ public class AdminResourcesModel extends BaseModel {
     @Column(name = "source_order", columnDefinition = "integer default 0")
     private int sourceOrder; //排序ID
 
+    @Column(name = "is_lock")
+    private boolean Lock; //是否锁定不允许修改
+
     public AdminResourcesModel getSourcePid() {
         return sourcePid;
     }
@@ -113,5 +116,13 @@ public class AdminResourcesModel extends BaseModel {
 
     public void setSourceOrder(int sourceOrder) {
         this.sourceOrder = sourceOrder;
+    }
+
+    public boolean isLock() {
+        return Lock;
+    }
+
+    public void setLock(boolean lock) {
+        Lock = lock;
     }
 }

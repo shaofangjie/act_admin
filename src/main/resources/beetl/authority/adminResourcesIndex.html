@@ -26,18 +26,9 @@
     </a>
 </div>
 <div class="weadmin-body">
-    <div class="layui-row">
-        <form class="layui-form layui-col-md12 we-search layui-form-pane">
-            <div class="layui-inline">
-                <input class="layui-input" placeholder="资源名称" id="resourceName" lay-verify="sourceName">
-            </div>
-            <button type="button" class="layui-btn" id="searchBut" lay-submit lay-filter="searchBut">查询</button>
-            <button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 0px;">重置</button>
-        </form>
-    </div>
     <div class="weadmin-block">
         <%if(@adminResourcesFunList.contains("authority.AdminResourcesController.add")) {%>
-        <button class="layui-btn" onclick="addPage('添加权限资源','/authority/AdminResources/add')"><i class="layui-icon">&#xe654;</i>添加</button>
+        <button class="layui-btn" id="addButton"><i class="layui-icon">&#xe654;</i>添加</button>
         <%} else {%>
         <button class="layui-btn layui-btn-disabled"><i class="layui-icon">&#xe654;</i>添加</button>
         <%}%>
@@ -65,13 +56,21 @@
     {{#  } }}
 </script>
 <script type="text/html" id="operation">
-    <%if(@adminResourcesFunList.contains("authority.AdminResourcesController.edit")) {%>
+    <%if(@adminResourcesFunList.contains("authority.AdminRoleController.edit")) {%>
+    {{#  if(d.lock == 1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">修改</a>
+    {{#  } else { }}
     <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
     <%} else {%>
     <a class="layui-btn layui-btn-xs layui-btn-disabled">修改</a>
     <%}%>
-    <%if(@adminResourcesFunList.contains("authority.AdminResourcesController.del")) {%>
+    <%if(@adminResourcesFunList.contains("authority.AdminRoleController.del")) {%>
+    {{#  if(d.lock == 1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
+    {{#  } else { }}
     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    {{#  } }}
     <%} else {%>
     <a class="layui-btn layui-btn-xs layui-btn-disabled">删除</a>
     <%}%>
