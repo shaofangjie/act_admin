@@ -4,19 +4,12 @@ layui.config({
 }).extend({
     treetable: 'module/treetable'
 });
-layui.use(['form', 'table', 'jquery', 'admin', 'layer', 'treetable'], function () {
+layui.use(['table', 'jquery', 'admin', 'layer', 'treetable'], function () {
     var $ = layui.jquery,
-        form = layui.form,
         table = layui.table,
         treetable = layui.treetable,
         layer = layui.layer,
         admin = layui.admin;
-
-    var queryParams = function () {
-        var param = {resourceSearchForm: {}};
-        param.resourceSearchForm.resourceName = $("#resourceName").val();
-        return param;
-    };
 
     var initTreeTable = function () {
         treetable.render({
@@ -36,8 +29,7 @@ layui.use(['form', 'table', 'jquery', 'admin', 'layer', 'treetable'], function (
                 {field: 'sourceFunction', title: '资源方法', width: '30%'},
                 {title: '是否启用', width: '10%', templet: '#enable'},
                 {title: '操作', width: '10%', templet: '#operation'}
-            ]],
-            where: queryParams()
+            ]]
         });
     };
 
