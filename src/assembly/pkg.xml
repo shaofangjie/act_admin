@@ -21,7 +21,7 @@ under the License.
     <id>dist</id>
 
     <formats>
-        <format>tar.gz</format>
+        <format>zip</format>
     </formats>
 
     <includeBaseDirectory>false</includeBaseDirectory>
@@ -72,9 +72,9 @@ under the License.
     <dependencySets>
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
-            <excludes>
-                <exclude>*:hibernate-*</exclude>
-            </excludes>
+            <!--<excludes>-->
+                <!--<exclude>*:hibernate-*</exclude>-->
+            <!--</excludes>-->
         </dependencySet>
     </dependencySets>
 </assembly>
