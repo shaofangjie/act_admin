@@ -22,3 +22,4 @@
 
 ```
 ##演示地址：[act-admin.ga](http://act-admin.ga/)
+用户名：admin 密码：admin
