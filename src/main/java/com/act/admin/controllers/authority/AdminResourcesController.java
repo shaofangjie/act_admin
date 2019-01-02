@@ -12,8 +12,10 @@ import com.act.admin.results.authority.AdminResourceResult;
 import com.act.admin.services.authority.AdminResourcesService;
 import com.act.admin.validateviolation.LayTableVaildateAdvice;
 import com.alibaba.fastjson.JSONObject;
+import org.osgl.http.H;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
+import org.osgl.mvc.annotation.ResponseContentType;
 import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.BadRequest;
 import org.osgl.mvc.result.Result;
@@ -40,6 +42,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
     @Inject
     private AdminResourcesService adminResourcesService;
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result index() {
         return render("/authority/adminResourcesIndex.html");
     }
@@ -69,6 +72,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
         return renderJson(adminResourceJson);
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result add() {
 
         List<Map<String, String>> allParentResources = adminResourcesService.getAllParentResources();
@@ -96,6 +100,7 @@ public class AdminResourcesController extends AuthBaseController implements Auth
 
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result edit(@Valid @Pattern(regexp = RegexpConsts.ID, message = "资源ID格式不合法") String id) {
 
         AdminResourcesModel adminResource = adminResourcesService.getAdminResourceById(id);

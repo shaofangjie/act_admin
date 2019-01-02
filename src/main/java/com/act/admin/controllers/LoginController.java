@@ -11,6 +11,7 @@ import org.osgl.http.H;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
 import org.osgl.mvc.annotation.Before;
+import org.osgl.mvc.annotation.ResponseContentType;
 import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.BadRequest;
 import org.osgl.mvc.result.Result;
@@ -40,6 +41,7 @@ public class LoginController extends BaseController implements MainConsts {
         }
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result loginIndex(H.Session session) {
         if (null == session.get("adminid")) {
             session.put("adminid", null);

@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.osgl.http.H;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
+import org.osgl.mvc.annotation.ResponseContentType;
 import org.osgl.mvc.result.Result;
 
 import javax.inject.Inject;
@@ -26,6 +27,7 @@ public class MainController extends AuthBaseController {
     @Inject
     private MainService mainService;
 
+    @ResponseContentType(H.MediaType.HTML)
     @IgnorePermissionCheck()
     public Result home(H.Session session) {
 
@@ -34,6 +36,7 @@ public class MainController extends AuthBaseController {
         return render("/main.html", menuList);
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     @IgnorePermissionCheck()
     public Result dashBoard() {
 

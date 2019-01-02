@@ -15,8 +15,10 @@ import com.act.admin.services.authority.AdminService;
 import com.act.admin.validateviolation.LayTableVaildateAdvice;
 import com.alibaba.fastjson.JSONObject;
 import io.ebean.PagedList;
+import org.osgl.http.H;
 import org.osgl.logging.L;
 import org.osgl.logging.Logger;
+import org.osgl.mvc.annotation.ResponseContentType;
 import org.osgl.mvc.annotation.ResponseStatus;
 import org.osgl.mvc.result.BadRequest;
 import org.osgl.mvc.result.Result;
@@ -42,6 +44,7 @@ public class AdminController extends AuthBaseController implements AuthorityCons
     @Inject
     private AdminService adminService;
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result index() {
 
         List<AdminRoleModel> adminRoleList = adminService.getAllRoleList();
@@ -75,6 +78,7 @@ public class AdminController extends AuthBaseController implements AuthorityCons
 
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result add() {
 
         List<AdminRoleModel> adminRoleList = adminService.getAllRoleList();
@@ -102,6 +106,7 @@ public class AdminController extends AuthBaseController implements AuthorityCons
 
     }
 
+    @ResponseContentType(H.MediaType.HTML)
     public Result edit(@Valid @Pattern(regexp = RegexpConsts.ID, message = "管理员ID格式不合法") String adminId) {
 
         List<AdminRoleModel> adminRoleList = adminService.getAllRoleList();
